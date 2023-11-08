@@ -1,0 +1,52 @@
+{
+  "default": {
+    "health": 200,
+    "damage": 10,
+    "defense": 10,
+    "maxSpeed": 1,
+    "rotationSpeed": 1,
+    "moveSpeedUpdate": 0.1,
+    "range": 10,
+    "cooldown": 1
+  },
+  "TankT34": {
+    "health": 200,
+    "damage": 100,
+    "defense": 50,
+    "maxSpeed": 10,
+    "rotationSpeed": 2,
+    "moveSpeedUpdate": 0.3,
+    "range": 100,
+    "cooldown": 1
+  },
+  "TankISU152": {
+    "health": 200,
+    "damage": 120,
+    "defense": 40,
+    "maxSpeed": 10,
+    "rotationSpeed": 2,
+    "moveSpeedUpdate": 0.3,
+    "range": 100,
+    "cooldown": 1
+  },
+  "TankKV2": {
+    "health": 200,
+    "damage": 90,
+    "defense": 80,
+    "maxSpeed": 10,
+    "rotationSpeed": 1.5,
+    "moveSpeedUpdate": 0.2,
+    "range": 100,
+    "cooldown": 1
+  },
+  "TankT26": {
+    "health": 200,
+    "damage": 90,
+    "defense": 50,
+    "maxSpeed": 10,
+    "rotationSpeed": 2,
+    "moveSpeedUpdate": 0.3,
+    "range": 150,
+    "cooldown": 1
+  }
+}

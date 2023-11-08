@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8bf7089bf508204abb7d1125651794c, type: 3}
+  m_Name: MapReferenceSO
+  m_EditorClassIdentifier: 
+  maps:
+  - key: Tutorial
+    mapAsset:
+      m_AssetGUID: 168b3aaa135a363468bf8d88bf3321d9
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Desert
+    mapAsset:
+      m_AssetGUID: 198d91c56abae284084e3da9fd117b29
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: City
+    mapAsset:
+      m_AssetGUID: fba00f26d35c6b64e897e88f30f9778a
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Islan
+    mapAsset:
+      m_AssetGUID: e45d6641a88e984429b48b0e9e944526
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Prefabs Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Prefabs Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 72b31ba25ca8c8e40bd97c88cc54fdcc
+  m_SerializeEntries:
+  - m_GUID: 8c28f9d014ff0b04eb3bcc175445837b
+    m_Address: Assets/Prefabs/Player/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8d6cf7ff49518994194e6ddd7dcdbf2b
+    m_Address: Assets/Prefabs/Player/Tanks
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: debf4a3c181809a4584794bd2d7a4ccf
+    m_Address: Assets/Prefabs/Shell.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58cdc4c3832a76b49a0efafa23ddfdf4
+    m_Address: Assets/Prefabs/Maps
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1cc59748e663a8142afdea91d1c91a6d, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: bff8fd298b17526489b9047c20a11580, type: 2}
+    - {fileID: 11400000, guid: fe84541a93c8d7c4aa5973e04830b06e, type: 2}

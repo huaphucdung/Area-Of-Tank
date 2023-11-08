@@ -1,0 +1,11 @@
+﻿Library
+Logs
+UserSettings
+*.vsconfig
+*.csproj
+*.sln
+ProjectSettings/ProjectVersion.txt
+.vs
+obj
+Temp
+UIElementsSchema

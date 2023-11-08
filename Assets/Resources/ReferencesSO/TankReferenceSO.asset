@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fdab20815bbff04496602e007a3131f, type: 3}
+  m_Name: TankReferenceSO
+  m_EditorClassIdentifier: 
+  tanks:
+  - key: TankT34
+    mapAsset:
+      m_AssetGUID: 8282c438201ec244d8cee393a0e85918
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: TankISU152
+    mapAsset:
+      m_AssetGUID: 2269038ae7df2b7409fb80f9c4d7ab85
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: TankKV2
+    mapAsset:
+      m_AssetGUID: 874a9c30cc51eb744991c0bfec39cb64
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: TankT26
+    mapAsset:
+      m_AssetGUID: 9a114b403e30a454cbba475fcde017f0
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
