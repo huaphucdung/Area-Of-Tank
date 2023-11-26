@@ -1,3 +1,4 @@
+using MEC;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,9 +27,9 @@ public class TankModule : MonoBehaviour
     [SerializeField] private string ShotTrigger = "Shot";
 
     [SerializeField] private string Idling = "Idle";
- 
+
     [SerializeField] private List<string> DeadTrigger;
-    [SerializeField] private List<string> Freeings;
+    [SerializeField] private List<string> FreeTrigger;
 
     private Rigidbody _rigidbody;
     private Animator _animator;
@@ -36,7 +37,7 @@ public class TankModule : MonoBehaviour
 
     private TankStruct data;
     private PlayerReusableData reusableData;
-    
+
 
     private void Awake()
     {
@@ -133,12 +134,13 @@ public class TankModule : MonoBehaviour
         AudioManager.StopPlayAudio(audioSource);
         AudioManager.PlayOneShotAudio(audioSource, tankDead);
         smokeExplosion.Play();
-        
+
         _animator.SetTrigger(DeadTrigger[Random.Range(0, DeadTrigger.Count)]);
     }
 
     public void TankFree()
     {
-        _animator.CrossFade(Freeings[Random.Range(0, Freeings.Count)], 0.1f);
+        _animator.SetTrigger(FreeTrigger[Random.Range(0, FreeTrigger.Count)]);
     }
 }
+ 

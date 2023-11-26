@@ -1,12 +1,17 @@
 using Photon.Pun;
 using Sirenix.OdinInspector;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
+    [Header("MainMenu Object:")]
+    [SerializeField] private Transform tankPosition;
+    
+    [Header("Room Object:")]
+    [SerializeField] private List<Transform> playerPosition;
+
     private void Awake()
     {
         LoginHandle.loginAccountAction += PlayfabManager.Login;

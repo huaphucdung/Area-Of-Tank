@@ -58488,6 +58488,18 @@ PrefabInstance:
       propertyPath: smokeLowHealth
       value: 
       objectReference: {fileID: 3286243726949539262}
+    - target: {fileID: -6240557927363043847, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
+      propertyPath: Freeings.Array.data[0]
+      value: Free1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6240557927363043847, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
+      propertyPath: Freeings.Array.data[1]
+      value: Free2
+      objectReference: {fileID: 0}
+    - target: {fileID: -6240557927363043847, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
+      propertyPath: Freeings.Array.data[2]
+      value: Free3
+      objectReference: {fileID: 0}
     - target: {fileID: -5636006127722750198, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
       propertyPath: m_Size.x
       value: 2.8873858

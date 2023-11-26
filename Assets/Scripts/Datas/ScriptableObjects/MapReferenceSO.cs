@@ -24,7 +24,6 @@ public class MapReferenceSO : ScriptableObject
         }
     }
 
-
     public static Map InstanceMap(string key)
     {
         if (_mapDictionary !=null || _mapDictionary.ContainsKey(key))

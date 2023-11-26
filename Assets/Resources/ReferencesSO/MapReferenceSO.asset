@@ -13,27 +13,21 @@ MonoBehaviour:
   m_Name: MapReferenceSO
   m_EditorClassIdentifier: 
   maps:
-  - key: Tutorial
-    mapAsset:
-      m_AssetGUID: 168b3aaa135a363468bf8d88bf3321d9
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
   - key: Desert
     mapAsset:
-      m_AssetGUID: 198d91c56abae284084e3da9fd117b29
+      m_AssetGUID: 3eb2381e14b48e142b89bc3c9e112e56
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  - key: City
+  - key: Forest
     mapAsset:
-      m_AssetGUID: fba00f26d35c6b64e897e88f30f9778a
+      m_AssetGUID: 5dc1a834be8577947bd747eabbf8de84
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
   - key: Islan
     mapAsset:
-      m_AssetGUID: e45d6641a88e984429b48b0e9e944526
+      m_AssetGUID: 40d7658b3c459f3489fc42f743354098
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0

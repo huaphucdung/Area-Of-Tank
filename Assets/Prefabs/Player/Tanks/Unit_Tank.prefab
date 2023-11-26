@@ -69,10 +69,10 @@ MonoBehaviour:
   - Dead2
   - Dead3
   - Dead4
-  Freeings:
-  - STC_Idle1
-  - STC_Idle2
-  - STC_Idle3
+  FreeTrigger:
+  - Free1
+  - Free2
+  - Free3
 --- !u!114 &-7219125518631217343
 MonoBehaviour:
   m_ObjectHideFlags: 0
