@@ -38,7 +38,6 @@ public class TankModule : MonoBehaviour
     private TankStruct data;
     private PlayerReusableData reusableData;
 
-
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -55,6 +54,12 @@ public class TankModule : MonoBehaviour
     public void SetPosition(Vector3 position)
     {
         transform.position = position;
+    }
+
+    public void SetPosition(Vector3 position, Quaternion rotation)
+    {
+        SetPosition(position);
+        transform.rotation = rotation;
     }
 
     // Move and rotation tank
@@ -141,6 +146,16 @@ public class TankModule : MonoBehaviour
     public void TankFree()
     {
         _animator.SetTrigger(FreeTrigger[Random.Range(0, FreeTrigger.Count)]);
+    }
+
+    public void DefaultTuretRotation()
+    {
+        turret.rotation = Quaternion.Euler(-90, transform.eulerAngles.y ,0);
+    }
+
+    public void StopAudio()
+    {
+        AudioManager.StopPlayAudio(audioSource);
     }
 }
  

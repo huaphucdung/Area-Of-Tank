@@ -34,11 +34,11 @@ public class PlayfabManager : MonoBehaviour
 
     private static void OnLoginSuccess(LoginResult obj)
     {
-        LoginHandle.loginSuccessAction?.Invoke(obj.InfoResultPayload.PlayerProfile.PlayerId);
+        LoginRegister.loginSuccessAction?.Invoke(obj.InfoResultPayload.PlayerProfile.PlayerId);
     }
     private static void OnRigisterSuccess(RegisterPlayFabUserResult obj)
     {
-        RegiserHandle.registerSuccessAction?.Invoke();
+        LoginRegister.registerSuccessAction?.Invoke();
     }
 
     

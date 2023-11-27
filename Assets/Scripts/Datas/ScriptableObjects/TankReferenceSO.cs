@@ -33,6 +33,16 @@ public class TankReferenceSO : ScriptableObject
         return null;
     }
 
+    public static GameObject InstanceTank(string key, Vector3 poistion, Quaternion rotation)
+    {
+        if (_tankDictionary != null || _tankDictionary.ContainsKey(key))
+        {
+            GameObject newTank = GameObject.Instantiate(_tankDictionary[key], poistion, rotation);
+            return newTank;
+        }
+        return null;
+    }
+
     public static GameObject InstanceTank(string key, Transform transform, Quaternion rotation)
     {
         if (_tankDictionary != null || _tankDictionary.ContainsKey(key))

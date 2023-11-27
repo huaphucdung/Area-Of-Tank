@@ -18,7 +18,7 @@ public class RoomItem : MonoBehaviour
     public bool IsReady => _isReady;
     private TankModule _currentTank;
     [Button]
-    public void Initialize(TankType type)
+    public void Initialize()
     {
         dictionaryTank = new Dictionary<TankType, TankModule>();
         foreach (TankType tankType in Enum.GetValues(typeof(TankType)))
@@ -26,7 +26,7 @@ public class RoomItem : MonoBehaviour
             dictionaryTank[tankType] = TankReferenceSO.InstanceTank(tankType.ToString(), transform, Quaternion.Euler(tankRotation)).GetComponent<TankModule>();
             dictionaryTank[tankType].gameObject.SetActive(false);
         }
-        ActiveTank(type);
+        /*ActiveTank(type);*/
     }
 
     private void ActiveTank(TankType type)

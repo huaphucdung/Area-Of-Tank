@@ -63,9 +63,6 @@ public class GameManager : MonoBehaviour
     private void Initiazlie() {
         controllers = new List<IController>();
 
-        InputManager.Initialzie();
-        InputManager.Enable();
-
         setCameraTargetEvent += SetTargetCamera;
         createPlayerEvent += OnPlayerCreated;
         playerDeadAction += OnPlayerDead;
