@@ -21,18 +21,24 @@ public class ResourceManager : MonoBehaviour
     public static Dictionary<string, TankStruct> TankDataDictionary;
     public static Dictionary<TankType, string> TankTypeToKeyDictionary;
 
+    public static IEnumerator<float> initCoroutine;
+
     [Header("Rerference Datas:")]
     [SerializeField] private TankReferenceSO tankReferenceSO;
     [SerializeField] private MapReferenceSO mapReferenceSO;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+        initCoroutine = Initialize();
+    }
 
-    [Button]
-    private void Initialize()
+    IEnumerator<float> Initialize()
     {
         tankReferenceSO.Initialize();
         mapReferenceSO.Initialize();
 
-        Timing.RunCoroutine(LoadTankData(tankJson));
+        yield return Timing.WaitUntilDone(Timing.RunCoroutine(LoadTankData(tankJson)));
 
         TankTypeToKeyDictionary = new Dictionary<TankType, string> {
             { TankType.TankT34, "TankT34"},

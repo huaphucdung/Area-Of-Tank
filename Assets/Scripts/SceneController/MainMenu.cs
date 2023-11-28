@@ -19,11 +19,9 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        InputManager.Initialzie();
-        InputManager.Enable();
-
         tankList = new List<TankModule>();
         IsTest = false;
+        Initialize();
     }
 
     #region Tank Test Control Method
@@ -41,7 +39,6 @@ public class MainMenu : MonoBehaviour
     }
     #endregion
 
-    [Button]
     private void Initialize()
     {
         foreach (TankType tankType in Enum.GetValues(typeof(TankType)))
@@ -58,7 +55,7 @@ public class MainMenu : MonoBehaviour
     }
 
     [Button]
-    private void NextLeftTank()
+    public void NextLeftTank()
     {
         if(currentIndex == 0)
         {
@@ -72,7 +69,7 @@ public class MainMenu : MonoBehaviour
     }
 
     [Button]
-    private void NextRightTank()
+    public void NextRightTank()
     {
         if (currentIndex == tankList.Count - 1)
         {
@@ -86,7 +83,7 @@ public class MainMenu : MonoBehaviour
     }
 
     [Button]
-    private void TestTank()
+    public void TestTank()
     {
         IsTest = true;
         InputManager.EnablePlayerAction();
@@ -97,7 +94,7 @@ public class MainMenu : MonoBehaviour
     }
 
     [Button]
-    private void ExitText()
+    public void ExitTest()
     {
         IsTest = false;
         InputManager.DisablePlayerAction();
@@ -109,7 +106,11 @@ public class MainMenu : MonoBehaviour
         currentTank?.SetPosition(tankTransform.position, tankTransform.rotation);
     }
 
-    
+    [Button]
+    public void JoinLobby()
+    {
+        PhotonManager.JoinLobby();
+    }
 
     private void SwapTank()
     {

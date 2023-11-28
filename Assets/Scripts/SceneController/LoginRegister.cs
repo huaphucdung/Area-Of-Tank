@@ -45,7 +45,7 @@ public class LoginRegister : MonoBehaviour
     #region Callback Methods
     private void OnLoginSuccess(string playerID)
     {
-        Debug.Log(playerID);
+        Debug.Log("Login Success");
         PhotonManager.ConnectServer(playerID);
     }
     private void OnRegisterSuccess()

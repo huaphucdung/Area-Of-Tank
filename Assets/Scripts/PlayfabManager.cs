@@ -41,8 +41,6 @@ public class PlayfabManager : MonoBehaviour
         LoginRegister.registerSuccessAction?.Invoke();
     }
 
-    
-
     private static void OnError(PlayFabError obj)
     {
         Debug.Log(obj.ErrorMessage);

@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using System;
 using Sirenix.OdinInspector;
+using Photon.Realtime;
 
 public class RoomItem : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class RoomItem : MonoBehaviour
 
     private Dictionary<TankType, TankModule> dictionaryTank;
     private bool _isReady;
+    private Player _player;
+
     public bool IsReady => _isReady;
     private TankModule _currentTank;
     [Button]
@@ -27,6 +30,12 @@ public class RoomItem : MonoBehaviour
             dictionaryTank[tankType].gameObject.SetActive(false);
         }
         /*ActiveTank(type);*/
+    }
+
+    public void SetPlayer(Player player)
+    {
+        _player = player;
+        ActiveTank((TankType) _player.CustomProperties["TankType"]);
     }
 
     private void ActiveTank(TankType type)
