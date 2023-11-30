@@ -41,14 +41,14 @@ public class MainMenu : MonoBehaviour
 
     private void Initialize()
     {
-        foreach (TankType tankType in Enum.GetValues(typeof(TankType)))
+        foreach (string tankType in TankReferenceSO.GetListTankType())
         {
-            TankModule newTank = TankReferenceSO.InstanceTank(tankType.ToString(), tankTransform.position, tankTransform.rotation).GetComponent<TankModule>();
-            newTank.Intialize(ResourceManager.GetTankDataByType(tankType), reusableData);
+            TankModule newTank = TankReferenceSO.InstanceTank(tankType, tankTransform.position, tankTransform.rotation).GetComponent<TankModule>();
+            newTank.Intialize(ResourceManager.GetTankData(tankType), reusableData);
             newTank.gameObject.SetActive(false);
             tankList.Add(newTank);
         }
-        if(tankList.Count > 0)
+        if (tankList.Count > 0)
         {
             SwapTank();
         }

@@ -831,6 +831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0344c20233755454ca4edd1ce0e6c476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerDataSO: {fileID: 11400000, guid: d6894fe8f831886438586f00fa598116, type: 2}
   tankJson: TankData.json
   tankReferenceSO: {fileID: 11400000, guid: 722cd67f5a04b4548af142e6d358c48a, type: 2}
   mapReferenceSO: {fileID: 11400000, guid: 1c0215d8ab5f02543a2b05329c37b9d6, type: 2}

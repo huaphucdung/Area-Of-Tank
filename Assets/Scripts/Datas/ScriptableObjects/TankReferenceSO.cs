@@ -53,6 +53,11 @@ public class TankReferenceSO : ScriptableObject
         }
         return null;
     }
+
+    public static List<string> GetListTankType()
+    {
+        return new List<string>(_tankDictionary.Keys);
+    }
 }
 
 [Serializable]

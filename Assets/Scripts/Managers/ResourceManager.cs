@@ -5,22 +5,16 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public enum TankType
-{
-    TankT34,
-    TankISU152,
-    TankKV2,
-    TankT26
-}
-
 public class ResourceManager : MonoBehaviour
 {
+    [Header("Player Data:")]
+    public PlayerDataSO defaultPlayerDataSO;
+    public static PlayerDataSO currentPlayerDataSO;
     [Header("Json Datas:")]
     [FilePath(ParentFolder = "Assets/Scripts/Datas/JsonFiles", Extensions = "json")] public string tankJson;
     
-    public static Dictionary<string, TankStruct> TankDataDictionary;
-    public static Dictionary<TankType, string> TankTypeToKeyDictionary;
-
+    public static Dictionary<string, TankStruct> _tankDataDictionary;
+   
     public static IEnumerator<float> initCoroutine;
 
     [Header("Rerference Datas:")]
@@ -33,30 +27,24 @@ public class ResourceManager : MonoBehaviour
         initCoroutine = Initialize();
     }
 
+    public static TankStruct GetTankData(string tankType)
+    {
+        if(_tankDataDictionary.TryGetValue(tankType, out TankStruct value))
+        {
+            return value;
+        }
+        return _tankDataDictionary["Default"];
+    }
+
     IEnumerator<float> Initialize()
     {
+        currentPlayerDataSO = defaultPlayerDataSO;
+
         tankReferenceSO.Initialize();
         mapReferenceSO.Initialize();
 
         yield return Timing.WaitUntilDone(Timing.RunCoroutine(LoadTankData(tankJson)));
-
-        TankTypeToKeyDictionary = new Dictionary<TankType, string> {
-            { TankType.TankT34, "TankT34"},
-            { TankType.TankISU152, "TankISU152"},
-            { TankType.TankKV2, "TankKV2"},
-            { TankType.TankT26, "TankT26"},
-        };
     }
-
-    public static TankStruct GetTankDataByType(TankType type)
-    {
-        if (TankDataDictionary.TryGetValue(TankTypeToKeyDictionary[type], out TankStruct data))
-        {
-            return data;
-        }
-        return TankDataDictionary["default"];
-    }
-
 
     IEnumerator<float> LoadTankData(string fileName)
     {
@@ -65,8 +53,19 @@ public class ResourceManager : MonoBehaviour
 
         string jsonText = File.ReadAllText(filePath);
 
-        TankDataDictionary = JsonConvert.DeserializeObject<Dictionary<string, TankStruct>>(jsonText);
+        _tankDataDictionary = JsonConvert.DeserializeObject<Dictionary<string, TankStruct>>(jsonText);
         yield return Timing.WaitForOneFrame;
         Debug.Log("Finish load tank datas");
+    }
+
+    public static void SavePlayerData()
+    {
+        PlayfabManager.SavePlayerData(currentPlayerDataSO.GetDataForSave());
+    }
+
+    [Button]
+    private static void TestCurrentData()
+    {
+        Debug.Log($"{currentPlayerDataSO.exp}, {currentPlayerDataSO.coin}");
     }
 }

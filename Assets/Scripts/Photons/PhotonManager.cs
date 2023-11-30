@@ -42,6 +42,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region Lobby
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        Lobby.roomListChangeAction?.Invoke(roomList);
+    }
+
     public static void JoinLobby()
     {        
         if (!PhotonNetwork.IsConnected) return;
@@ -112,14 +117,31 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
     }
+
+    public static void UpdateRoomProperties(string map, string mode)
+    {
+        PhotonNetwork.CurrentRoom.CustomProperties.Add("map", map);
+        PhotonNetwork.CurrentRoom.CustomProperties.Add("mode", mode);
+    }
+
+    public static void LocalPlayerChangeTankType(string tankType)
+    {
+        PhotonNetwork.LocalPlayer.CustomProperties.Add("TankType", tankType);
+    }
+
+    public static void LocalPlayerReadAndUnready(bool value)
+    {
+        PhotonNetwork.LocalPlayer.CustomProperties.Add("Ready", value);
+    }
+
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
-
+        Room.roomSettingUpdateAction?.Invoke(propertiesThatChanged);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        
+        Room.playerSettingInRoomUpdateAction?.Invoke(targetPlayer, changedProps);
     }
 
     public override void OnJoinedRoom()
@@ -137,16 +159,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Lobby.joinRoomFailseAction?.Invoke();
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    public override void OnLeftRoom()
     {
     }
 
-    public override void OnLeftRoom()
-    { 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Room.hasPlayerJoinRoomAction?.Invoke(newPlayer);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+        Room.hasPlayerLeaveRoomAction?.Invoke(otherPlayer);
     }
 
     public static bool IsInRoom()

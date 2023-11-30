@@ -4,6 +4,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Security.Cryptography;
+using System.Text;
 
 public class LoginRegister : MonoBehaviour
 {
@@ -22,6 +24,7 @@ public class LoginRegister : MonoBehaviour
         registerSuccessAction += OnRegisterSuccess;
     }
 
+ 
     //Test
     [Button]
     private void TestLogin(string username, string password)
@@ -47,11 +50,15 @@ public class LoginRegister : MonoBehaviour
     {
         Debug.Log("Login Success");
         PhotonManager.ConnectServer(playerID);
+        //Load Data
+        PlayfabManager.GetPlayerData();
+
     }
     private void OnRegisterSuccess()
     {
         Debug.Log("Register Success");
-        /*ShowLoginUI();*/
+        //Save Default Data
+        ResourceManager.SavePlayerData();
     }
     #endregion
 }

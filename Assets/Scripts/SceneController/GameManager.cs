@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
         map = MapReferenceSO.InstanceMap("Islan");
     }
 
-    private void AddController(Type type, TankType tankType)
+    private void AddController(Type type, string tankType)
     {
         switch (type)
         {
@@ -86,14 +86,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void AddPlayer(GameObject obj, TankType tankType)
+    private void AddPlayer(GameObject obj, string tankType)
     {
         //Set Model Data
         IModel model = MVCFactory.CreateModel(Type.Player);
         model.Initialize();
         model.ApplyDesgin(new PlayerModelData
         {
-            tankData = ResourceManager.GetTankDataByType(tankType)
+            tankData = ResourceManager.GetTankData(tankType)
         });
 
         //Set View
@@ -123,9 +123,9 @@ public class GameManager : MonoBehaviour
 
     ///Test
     [Button]
-    private void TestAddPlayer(TankType type)
+    private void TestAddPlayer(string tankType)
     {
-        AddController(Type.Player, type);
+        AddController(Type.Player, tankType);
     }
 
     IEnumerator<float> NewPlayerTank(PlayerController PC, float wait = 0f)

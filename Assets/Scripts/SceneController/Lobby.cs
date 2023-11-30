@@ -1,12 +1,16 @@
 using Cinemachine;
 using Photon.Pun;
+using Photon.Realtime;
 using Sirenix.OdinInspector;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Lobby : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera roomCamera;
+
+    public static Action<List<RoomInfo>> roomListChangeAction;
 
     public static Action joinLobbySuccessAction;
 
@@ -18,11 +22,14 @@ public class Lobby : MonoBehaviour
 
     private static ExitGames.Client.Photon.Hashtable defaultData = new ExitGames.Client.Photon.Hashtable
         {
-            {"TankType", TankType.TankT34},
+            {"TankType", "TankT34"},
+            {"Ready", false},
         };
 
     private void Awake()
     {
+        roomListChangeAction += OnRoomListUpdate;
+
         joinLobbySuccessAction += OnJoinLooby;
 
         createRoomSuccessAction += OnCreateRoom;
@@ -32,6 +39,10 @@ public class Lobby : MonoBehaviour
         leaveRoomAction += OnLeaveRoom;
     }
 
+    private void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        //Show room list in UI
+    }
 
     [Button]
     public static void LeaveLobby()

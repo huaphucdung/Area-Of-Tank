@@ -14,7 +14,7 @@ public class RoomItem : MonoBehaviour
     [SerializeField] private Color readyColor;
     [SerializeField] private Color unreadyColor;
 
-    private Dictionary<TankType, TankModule> dictionaryTank;
+    private Dictionary<string, TankModule> dictionaryTank;
     private bool _isReady;
     private Player _player;
 
@@ -23,10 +23,11 @@ public class RoomItem : MonoBehaviour
     [Button]
     public void Initialize()
     {
-        dictionaryTank = new Dictionary<TankType, TankModule>();
-        foreach (TankType tankType in Enum.GetValues(typeof(TankType)))
+        dictionaryTank = new Dictionary<string, TankModule>();
+        
+        foreach (string tankType in TankReferenceSO.GetListTankType())
         {
-            dictionaryTank[tankType] = TankReferenceSO.InstanceTank(tankType.ToString(), transform, Quaternion.Euler(tankRotation)).GetComponent<TankModule>();
+            dictionaryTank[tankType] = TankReferenceSO.InstanceTank(tankType, transform, Quaternion.Euler(tankRotation)).GetComponent<TankModule>();
             dictionaryTank[tankType].gameObject.SetActive(false);
         }
         /*ActiveTank(type);*/
@@ -35,20 +36,20 @@ public class RoomItem : MonoBehaviour
     public void SetPlayer(Player player)
     {
         _player = player;
-        ActiveTank((TankType) _player.CustomProperties["TankType"]);
+        ActiveTank((string) _player.CustomProperties["TankType"]);
     }
 
-    private void ActiveTank(TankType type)
+    private void ActiveTank(string tankType)
     {
-        _currentTank = dictionaryTank[type];
+        _currentTank = dictionaryTank[tankType];
         _currentTank?.gameObject.SetActive(true);
         _currentTank?.TankFree();
     }
 
-    public void ChangeTank(TankType type)
+    public void ChangeTank(string tankType)
     {
         _currentTank?.gameObject.SetActive(false);
-        ActiveTank(type);
+        ActiveTank(tankType);
     }
 
     public void SetReady()

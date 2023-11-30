@@ -46,28 +46,26 @@ public class PlayfabManager : MonoBehaviour
         Debug.Log(obj.ErrorMessage);
     }
 
-    private void GetPlayerData()
+    public static void GetPlayerData()
     {
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecieved, OnError);
     }
 
-    private void OnDataRecieved(GetUserDataResult obj)
+    private static void OnDataRecieved(GetUserDataResult result)
     {
-       
+        ResourceManager.currentPlayerDataSO.ConvertData(result.Data);
     }
 
-    private void SavePlayerData()
+    public static void SavePlayerData(Dictionary<string, string> data)
     {
         var request = new UpdateUserDataRequest
         {
-            Data = new Dictionary<string, string>
-            {
-            }
+            Data = data
         };
         PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
     }
 
-    private void OnDataSend(UpdateUserDataResult obj)
+    private static void OnDataSend(UpdateUserDataResult obj)
     {
         
     }
