@@ -5,6 +5,7 @@ using UnityEngine;
 public class Map : MonoBehaviour
 {
     [SerializeField] private List<Transform> playerSpawnPosition;
+    [SerializeField] private List<Transform> itemSpawnPosition;
     [SerializeField] private LayerMask layerCheck;
     [SerializeField] [Range(0, 10f)] private float rangeCheck = 5f;
 
@@ -25,7 +26,7 @@ public class Map : MonoBehaviour
         ITakeDamage takeDame = other.GetComponent<ITakeDamage>();
         if (takeDame != null)
         {
-            takeDame.Attack(9999);
+            takeDame.Attack(0, true);
         }
     }
 }

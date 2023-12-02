@@ -97,7 +97,9 @@ public class TankModule : MonoBehaviour
         tankShell.SetData(new ShellData
         {
             damage = data.damage,
-            controller = controller
+            controller = controller,
+            isBuffDame = reusableData.IsBuffDame
+
         });
         tankShell.Rb.AddForce(-turret.up.normalized * data.range, ForceMode.Force);
 

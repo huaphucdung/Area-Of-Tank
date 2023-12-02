@@ -19,7 +19,9 @@ public class PlayerModel : BaseModel
             currentHealth = 100,
             currentEngine = 0,
             cooldown = Time.time,
-            state = CharacterState.Live
+            state = CharacterState.Live,
+            IsShield = false,
+            IsBuffDame = false
         };
     }
 
@@ -46,16 +48,23 @@ public class PlayerModel : BaseModel
         reusableData.state = state;
     }
 
-    public bool SetChangeHealth(int value, int defenceBase = 10)
+    public bool SetTakeDame(int value, bool kill, int defenceBase = 10)
     {
-        if(value >= 0)
+        if (kill)
         {
-            reusableData.currentEngine = Mathf.Clamp(reusableData.currentEngine + value, 0, tankData.health);
-            return false;
+            reusableData.currentHealth = 0;
+            return true;
         }
 
-        reusableData.currentEngine += value + ((int)tankData.defense / defenceBase);
-        return (reusableData.currentEngine <= 0) ? true : false;
+        if (reusableData.IsShield) return false;
+
+        reusableData.currentHealth += value + ((int)tankData.defense / defenceBase);
+        return (reusableData.currentHealth <= 0) ? true : false;
+    }
+
+    public void SetTakeHeal(int value)
+    {
+        reusableData.currentHealth = Mathf.Clamp(reusableData.currentHealth + value, 0, tankData.health);
     }
 
     public bool IsDead()
@@ -70,6 +79,8 @@ public struct PlayerReusableData
     public float currentEngine;
     public float cooldown;
     public CharacterState state;
+    public bool IsShield;
+    public bool IsBuffDame;
 }
 
 public class PlayerModelData : IData

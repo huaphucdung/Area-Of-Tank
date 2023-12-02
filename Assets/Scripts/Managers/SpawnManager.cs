@@ -7,22 +7,36 @@ using UnityEngine.Pool;
 
 public class SpawnManager : MonoBehaviour
 {
+    [Header("Shell")]
     [SerializeField] private AssetReference shell;
     [SerializeField] private Transform bulletParent;
 
+    [Header("BoxItem")]
+    [SerializeField] private AssetReference boxItem;
+    [SerializeField] private Transform boxItemParent;
+
+
     public static Func<Vector3, Quaternion,Shell> GetShellEvent;
-    public static Action<Shell> RelaseShellEvent;
+    public static Action<Shell> ReleaseShellEvent;
+
+
+    public static Action<BoxItem> ReleaseBoxItemEvent;
 
     private ObjectPool<Shell> shellPool;
+    private ObjectPool<BoxItem> boxItemPool;
 
     private void Awake()
     {
-        shellPool = new ObjectPool<Shell>(CreateShell, OnTakeShellFromPoll, OnRetrunShellToPoll, OnDestroyShell, false, 50 , 1000);
+        shellPool = new ObjectPool<Shell>(CreateShell, OnTakeShellFromPool, OnReturnShellToPool, OnDestroyShell, false, 50 , 1000);
+        boxItemPool = new ObjectPool<BoxItem>(CreateBox, OnTakeBoxFromPool, OnReturnBoxToPool, OnDestroyBox, false, 10, 100);
 
         GetShellEvent += GetShell;
-        RelaseShellEvent += RelaseShell;
+        ReleaseShellEvent += RelaseShell;
+
+        ReleaseBoxItemEvent += RelaseBoxItem;
     }
 
+    #region Shell Method
     private Shell GetShell(Vector3 postion, Quaternion rotation)
     {
         Shell shellGet = shellPool.Get();
@@ -47,13 +61,13 @@ public class SpawnManager : MonoBehaviour
         return newShell;
     }
 
-    private void OnTakeShellFromPoll(Shell shell)
+    private void OnTakeShellFromPool(Shell shell)
     {
         shell.ResetVelocity();
         shell.gameObject.SetActive(true);
     }
 
-    private void OnRetrunShellToPoll(Shell shell)
+    private void OnReturnShellToPool(Shell shell)
     {
         shell.gameObject.SetActive(false);
     }
@@ -63,6 +77,43 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject.Destroy(shell.gameObject);
     }
+    #endregion
 
-    
+    #region BoxItem Method
+    private BoxItem GetBoxItem()
+    {
+        BoxItem boxItem = boxItemPool.Get();
+        return boxItem;
+    }
+    private void RelaseBoxItem(BoxItem box)
+    {
+        boxItemPool.Release(box);
+    }
+    private BoxItem CreateBox()
+    {
+        var handle = boxItem.InstantiateAsync();
+        handle.WaitForCompletion();
+        BoxItem newBox = handle.Result.GetComponent<BoxItem>();
+        newBox.gameObject.SetActive(false);
+
+        newBox.transform.parent = boxItemParent;
+        Debug.Log("Create 1 new BoxItem");
+        return newBox;
+    }
+
+    private void OnTakeBoxFromPool(BoxItem box)
+    {
+        box.gameObject.SetActive(true);
+    }
+
+    private void OnReturnBoxToPool(BoxItem box)
+    {
+        box.gameObject.SetActive(false);
+    }
+
+    private void OnDestroyBox(BoxItem box)
+    {
+        GameObject.Destroy(box.gameObject);
+    }
+    #endregion
 }

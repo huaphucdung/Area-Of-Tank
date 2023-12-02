@@ -5,11 +5,15 @@ using UnityEngine;
 
 public interface ICharacter
 {
-    bool HitDamage(int value);
+    bool HitDamage(int value, bool kill = false);
 }
 
 public interface ITakeDamage
 {
-    bool Attack(int value);
+    bool Attack(int value, bool kill = false);
 }
 
+public interface ITakeEffect
+{
+    void DoEffect(EffectType type);
+}

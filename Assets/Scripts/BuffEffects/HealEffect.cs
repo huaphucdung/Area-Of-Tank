@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class HealEffect : BaseEffect
 {
-    public override void StartEffect()
+    [SerializeField] private int value;
+    public override void StartEffect(PlayerModel data)
     {
-        base.StartEffect();
+        data.SetTakeHeal(value);
+        effect.Play();
     }
 
-    public override void EndEffect()
+    public override void EndEffect(PlayerModel data)
     {
-        base.EndEffect();
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shell : MonoBehaviour
 {
     [SerializeField] private float lifeTime = 2f;
-    [SerializeField] private float damage;
+    [SerializeField] private int damage;
     [SerializeField] private ParticleSystem boomEffect;
     [SerializeField] private AudioClip sound;
 
@@ -34,6 +34,9 @@ public class Shell : MonoBehaviour
         AudioManager.PlayOneShotAudio(_source, sound);
         ResetVelocity();
         Invoke("ReturnToPool", 0.5f);
+        ITakeDamage takeDamage = collision.gameObject.GetComponent<ITakeDamage>();
+        if (takeDamage == null) return;
+        takeDamage.Attack(damage);
     }
 
     private void OnEnable()
@@ -49,7 +52,7 @@ public class Shell : MonoBehaviour
         if (data == null || !(data is ShellData)) return;
 
         controller = ((ShellData)data).controller;
-        damage = ((ShellData)data).damage;
+        damage = Mathf.FloorToInt(((ShellData)data).damage * (((ShellData)data).isBuffDame? 1 : 1.5f));
     }
 
     public void SetTransfrom(Vector3 position, Quaternion rotation)
@@ -65,12 +68,13 @@ public class Shell : MonoBehaviour
 
     private void ReturnToPool()
     {
-        SpawnManager.RelaseShellEvent(this);
+        SpawnManager.ReleaseShellEvent(this);
     }
 }
 
 public class ShellData : IData
 {
     public PlayerController controller;
-    public float damage;
+    public int damage;
+    public bool isBuffDame;
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class TakeDamageModule : MonoBehaviour, ITakeDamage
 {
     private ICharacter character;
-    public Func<int, bool> TakeDameEvent;
+    public Func<int, bool, bool> TakeDameEvent;
 
     public void Initialize(IData data)
     {
@@ -14,9 +14,9 @@ public class TakeDamageModule : MonoBehaviour, ITakeDamage
         character = ((TakeDameData)data).character;
     }
 
-    public bool Attack(int value)
+    public bool Attack(int value, bool kill)
     {
-        return TakeDameEvent.Invoke(value);
+        return TakeDameEvent.Invoke(value, kill);
     }
 }
 

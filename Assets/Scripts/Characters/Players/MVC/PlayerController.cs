@@ -8,6 +8,8 @@ public class PlayerController : BaseController, ICharacter
 {
     protected TankModule tankModule;
     protected TakeDamageModule takeDamageModule;
+    protected EffectModule effectModule;
+
     public PlayerView playerView => (PlayerView)view;
     public PlayerModel playerModel => (PlayerModel)model;
 
@@ -21,6 +23,9 @@ public class PlayerController : BaseController, ICharacter
 
         takeDamageModule = playerView.GetComponentInChildren<TakeDamageModule>();
         takeDamageModule.Initialize(new TakeDameData { character = this });
+
+        effectModule = playerView.GetComponentInChildren<EffectModule>();
+        effectModule.Initialize(playerModel);
 
         Default();
     }
@@ -60,9 +65,9 @@ public class PlayerController : BaseController, ICharacter
         GameManager.playerDeadAction?.Invoke(this);
     }
 
-    public bool HitDamage(int value)
+    public bool HitDamage(int value, bool kill = false)
     {
-        bool IsDead = playerModel.SetChangeHealth(-value);
+        bool IsDead = playerModel.SetTakeDame(value, kill);
         if (IsDead)
             Dead();
         return IsDead;
