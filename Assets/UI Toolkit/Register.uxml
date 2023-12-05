@@ -1,9 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<engine:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:engine="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
->
-    
-</engine:UXML>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="VisualElement" style="flex-grow: 1; left: 65%; width: 35%; align-items: center; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="BackBtnField" style="flex-grow: 1; width: 65%; height: 20%; justify-content: center;">
+            <ui:Button text="Back to Login" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BackToLoginBtn" style="align-items: center; padding-top: 10%;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="InputField" style="flex-grow: 1; left: auto; width: 65%; align-items: center; justify-content: center; height: 80%; background-color: rgba(0, 0, 0, 0.39); align-self: center;">
+            <ui:TextField picking-mode="Ignore" password="false" is-delayed="false" usage-hints="None" readonly="false" name="Email" view-data-key="email" style="justify-content: flex-start; width: 100%;" />
+            <ui:TextField picking-mode="Ignore" name="Password" style="width: 100%; padding-top: 10px;" />
+            <ui:TextField picking-mode="Ignore" name="ConfirmPassword" style="width: 100%; padding-top: 10px;" />
+            <ui:Label tabindex="-1" text="EmailErrorLable" parse-escape-sequences="true" display-tooltip-when-elided="true" name="EmailErrorLable" style="bottom: auto; position: relative; right: auto; left: auto; top: auto; padding-top: 10%; padding-right: 4px; padding-left: 4px;" />
+            <ui:Button text="Register And Login" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RegisterBtn" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

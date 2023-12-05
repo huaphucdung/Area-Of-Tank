@@ -1,8 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 1; left: 65%; width: 35%; align-items: center;">
-        <ui:VisualElement style="flex-grow: 1; left: 0; width: 65%;">
-            <ui:Label tabindex="-1" text="Login" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LoginLabel" />
+    <ui:VisualElement style="flex-grow: 1; left: 65%; width: 35%; align-items: center; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="InputField" style="flex-grow: 1; left: 0; width: 65%; align-items: center; justify-content: center; height: 100%; background-color: rgba(0, 0, 0, 0.39); align-self: center;">
             <ui:TextField picking-mode="Ignore" password="false" is-delayed="false" usage-hints="None" readonly="false" name="Email" view-data-key="email" style="justify-content: flex-start; width: 100%;" />
+            <ui:TextField picking-mode="Ignore" name="Password" style="width: 100%; padding-top: 10px;" />
+            <ui:Label tabindex="-1" text="EmailErrorLable" parse-escape-sequences="true" display-tooltip-when-elided="true" name="EmailErrorLable" style="bottom: auto; position: relative; right: auto; left: auto; top: auto; padding-right: 4px; padding-left: 4px; padding-top: 10%; font-size: 20px;" />
+            <ui:Button text="Login" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LoginBtn" style="-unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial; font-size: 30px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
