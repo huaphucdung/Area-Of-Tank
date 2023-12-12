@@ -16,7 +16,12 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: e0c1759755e57e64cbce9aa096d6ebb9
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 69a6f5892f70dcb4683d575b5f63a68c
+    m_Address: Assets/UI Toolkit/Room.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1cc59748e663a8142afdea91d1c91a6d, type: 2}
   m_SchemaSet:

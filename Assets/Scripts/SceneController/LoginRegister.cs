@@ -15,6 +15,12 @@ public class LoginRegister : MonoBehaviour
     public static Action<string, string, string> registerAction;
     public static Action registerSuccessAction;
 
+    public static Action switchToLogin;
+    public static Action switchToRegister;
+
+    private LoginUI loginUI;
+    private RegisterUI registerUI;
+
     private void Start()
     {
         loginAccountAction += PlayfabManager.Login;
@@ -22,9 +28,33 @@ public class LoginRegister : MonoBehaviour
 
         registerAction += PlayfabManager.RegisterAccount;
         registerSuccessAction += OnRegisterSuccess;
+
+        switchToLogin += SwitchToLogin;
+        switchToRegister += SwitchToRegister;
+
+        loginUI = UIManager.GetAndShowUI<LoginUI>();
+        registerUI = UIManager.GetAndShowUI<RegisterUI>(null, null, false);
     }
 
- 
+    private void SwitchToLogin()
+    {
+        registerUI.Hide();
+        loginUI.Show();
+    }
+
+    private void SwitchToRegister()
+    {
+        loginUI.Hide();
+        registerUI.Hide();
+    }
+
+    private void SwitchToMainMenu()
+    {
+        loginUI.Hide();
+        registerUI.Hide();
+        MainMenu.ShowMainMenuUI?.Invoke();
+    }
+
     //Test
     [Button]
     private void TestLogin(string username, string password)
@@ -52,6 +82,7 @@ public class LoginRegister : MonoBehaviour
         PhotonManager.ConnectServer(playerID);
         //Load Data
         PlayfabManager.GetPlayerData();
+        SwitchToMainMenu();
 
     }
     private void OnRegisterSuccess()
@@ -59,6 +90,8 @@ public class LoginRegister : MonoBehaviour
         Debug.Log("Register Success");
         //Save Default Data
         ResourceManager.SavePlayerData();
+
+        SwitchToLogin();
     }
     #endregion
 }

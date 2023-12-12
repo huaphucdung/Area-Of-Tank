@@ -9,14 +9,13 @@ public class UIManager : MonoBehaviour
 
     private static Dictionary<string, List<BaseUI>> _uiDictionary;
     private static UIReferenceSO uiStaticSO;
+    private static Transform UIOverlayTransfrom;
+   
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-    }
-
-    private void Start()
-    {
         uiStaticSO = uiReferenceSO;
+        UIOverlayTransfrom = transform;
     }
 
     public static void Initialize()
@@ -32,8 +31,7 @@ public class UIManager : MonoBehaviour
         T UI = null;
        
         //Check has key UI in UI ReferenceSO
-        if (uiStaticSO.IsContainsUI(k)) return UI;
-
+        if (!uiStaticSO.IsContainsUI(k)) return UI;
         UIReference reference = uiStaticSO.GetUIReference(k);
 
         //Check if has old UI then get it
@@ -78,8 +76,11 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        if (!UI.IsInit) UI.Initialize(data);
-
+        if (!UI.IsInit)
+        {
+            UI.Initialize(data);
+            _uiDictionary[k].Add(UI);
+        }
         if (show)
         {
             UI.Show(showData);
@@ -93,14 +94,18 @@ public class UIManager : MonoBehaviour
 
     private static T UILoadingByPrefab<T>(UIReference reference) where T : BaseUI
     {
-        return Instantiate(reference.prefabs).GetComponent<T>();
+        return Instantiate(reference.prefabs, UIOverlayTransfrom).GetComponent<T>();
     }
 
     private static T UILoadingByAssetReference<T>(UIReference reference) where T : BaseUI
     {
         var handle = reference.asset.InstantiateAsync();
         handle.WaitForCompletion();
-        return handle.Result.GetComponent<T>();
+
+        GameObject ui = handle.Result;
+        ui.transform.SetParent(UIOverlayTransfrom);
+        
+        return ui.GetComponent<T>();
     }
 
     public static void HideUI<T>() where T : BaseUI
@@ -125,7 +130,7 @@ public class UIManager : MonoBehaviour
         string k = typeof(T).ToString();
         if (_uiDictionary.ContainsKey(k) && _uiDictionary[k] != null)
         {
-            foreach (T ui in _uiDictionary[k])
+            foreach (var ui in _uiDictionary[k])
             {
                 ui.Hide();
             }

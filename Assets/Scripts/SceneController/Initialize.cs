@@ -8,15 +8,18 @@ public class Initialize : MonoBehaviour
 {
     private void Start()
     {
-        InputManager.Initialzie();
-        InputManager.Enable();
+        UIManager.Initialize();
         Timing.RunCoroutine(InitLoadAll());
     }
 
     IEnumerator<float> InitLoadAll()
     {
+        LoadingUI loading = UIManager.GetAndShowUI<LoadingUI>();
         yield return Timing.WaitUntilDone(Timing.RunCoroutine(ResourceManager.initCoroutine));
-        
+
+        InputManager.Initialzie();
+        InputManager.Enable();
+
         SceneManager.LoadScene("Menu");
     }
 }

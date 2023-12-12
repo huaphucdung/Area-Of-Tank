@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class LoadingUI : BaseUI
 {
-
+    public override void Hide()
+    {
+        base.Hide();
+    }
 }

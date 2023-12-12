@@ -10,18 +10,33 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Transform tankTransform;
     [SerializeField] private CinemachineVirtualCamera targetCamera;
 
+    public static Action ShowMainMenuUI;
+
     private List<TankModule> tankList;
     private int currentIndex = 0;
     private TankModule currentTank;
 
     private PlayerReusableData reusableData = new PlayerReusableData();
     private bool IsTest;
+    private MainMenuUI ui;
 
     private void Start()
     {
         tankList = new List<TankModule>();
         IsTest = false;
+        ShowMainMenuUI += ShowUI;
         Initialize();
+        UIManager.HideAllUI<LoadingUI>();
+    }
+
+    private void ShowUI()
+    {
+        ui = UIManager.GetAndShowUI<MainMenuUI>();
+    }
+
+    private void HideUI()
+    {
+        ui.Hide();
     }
 
     #region Tank Test Control Method
@@ -125,14 +140,4 @@ public class MainMenu : MonoBehaviour
         targetCamera.Follow = obj;
         targetCamera.LookAt = obj;
     }
-}
-
-public class LoginHandle
-{
-    
-}
-
-public class RegiserHandle
-{
-    
 }

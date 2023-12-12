@@ -13,38 +13,56 @@ MonoBehaviour:
   m_Name: UIReferenceSO
   m_EditorClassIdentifier: 
   uiReferences:
-  - key: 
-    isSingle: 0
-    isPrefabs: 0
+  - key: LoadingUI
+    isSingle: 1
+    isPrefabs: 1
     asset:
       m_AssetGUID: 
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-    prefabs: {fileID: 0}
-  - key: 
-    isSingle: 0
+    prefabs: {fileID: 641409527525710135, guid: 1871fba6080c7ac48ab96709c2b4274c, type: 3}
+  - key: MainMenuUI
+    isSingle: 1
     isPrefabs: 0
     asset:
-      m_AssetGUID: 
+      m_AssetGUID: 01a639ee1c8a8374ea76ec118a6b8456
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     prefabs: {fileID: 0}
-  - key: 
-    isSingle: 0
+  - key: LobbyUI
+    isSingle: 1
     isPrefabs: 0
     asset:
-      m_AssetGUID: 
+      m_AssetGUID: bd00293df573b474984e78f5491edbfc
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     prefabs: {fileID: 0}
-  - key: 
-    isSingle: 0
+  - key: RoomUI
+    isSingle: 1
     isPrefabs: 0
     asset:
-      m_AssetGUID: 
+      m_AssetGUID: 4bfbec3c8e302f248904ccf97c4784e2
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    prefabs: {fileID: 0}
+  - key: LoginUI
+    isSingle: 1
+    isPrefabs: 0
+    asset:
+      m_AssetGUID: 347908d34d890b542a51ceb2dc2360ed
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    prefabs: {fileID: 0}
+  - key: RegisterUI
+    isSingle: 1
+    isPrefabs: 0
+    asset:
+      m_AssetGUID: 7c026fc5d2e6f59439bfcc9002cb8fea
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
