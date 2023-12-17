@@ -13,15 +13,6 @@ MonoBehaviour:
   m_Name: UIReferenceSO
   m_EditorClassIdentifier: 
   uiReferences:
-  - key: LoadingUI
-    isSingle: 1
-    isPrefabs: 1
-    asset:
-      m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
-    prefabs: {fileID: 641409527525710135, guid: 1871fba6080c7ac48ab96709c2b4274c, type: 3}
   - key: MainMenuUI
     isSingle: 1
     isPrefabs: 0

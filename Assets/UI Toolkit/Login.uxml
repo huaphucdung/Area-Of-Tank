@@ -5,6 +5,7 @@
             <ui:TextField picking-mode="Ignore" name="Password" style="width: 100%; padding-top: 10px;" />
             <ui:Label tabindex="-1" text="EmailErrorLable" parse-escape-sequences="true" display-tooltip-when-elided="true" name="EmailErrorLable" style="bottom: auto; position: relative; right: auto; left: auto; top: auto; padding-right: 4px; padding-left: 4px; padding-top: 10%; font-size: 20px;" />
             <ui:Button text="Login" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LoginBtn" style="-unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial; font-size: 30px;" />
+            <ui:Button text="Register" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RegisterBtn" style="-unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial; font-size: 30px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

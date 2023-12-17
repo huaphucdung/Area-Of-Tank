@@ -1,30 +1,58 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="Screen" style="flex-grow: 1; width: 100%; height: 100%;">
-        <ui:VisualElement name="Top" style="flex-grow: 1; width: 100%; height: 15%; background-color: rgba(0, 0, 0, 0.21); margin-top: 5px; flex-direction: row; flex-wrap: wrap;">
-            <ui:VisualElement name="Player" style="flex-grow: 1; height: 100%; width: 40%; flex-wrap: wrap;">
+        <ui:VisualElement name="Top" style="flex-grow: 1; width: 100%; height: 25%; background-color: rgba(0, 0, 0, 0); margin-top: 5px; flex-direction: row; flex-wrap: wrap;">
+            <ui:VisualElement name="Player" style="flex-grow: 1; height: 100%; width: 37.5%; flex-wrap: wrap; margin-left: 2.5%;">
                 <ui:VisualElement name="PlayerInfo" style="flex-grow: 1; flex-direction: row; width: 100%; height: auto; justify-content: center; flex-wrap: nowrap;">
                     <ui:Label tabindex="-1" text="PlayerName" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PlayerName" style="font-size: 50px; width: 50%; height: 50%; background-color: rgba(135, 28, 137, 0.61);" />
-                    <ui:Label tabindex="-1" text="PlayerLevel" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PlayerLevel" style="font-size: 50px; width: 50%; height: 50%; background-color: rgba(63, 190, 90, 0.68);" />
+                    <ui:Label tabindex="-1" text="PlayerLevel" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PlayerCoin" style="font-size: 50px; width: 50%; height: 50%; background-color: rgba(63, 190, 90, 0.68);" />
                 </ui:VisualElement>
                 <ui:VisualElement name="NotKnow" style="flex-grow: 1; background-color: rgba(202, 83, 83, 0.47);" />
             </ui:VisualElement>
-            <ui:VisualElement name="Logo180p" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Textures/Tanks/AnyTexture.jpg?fileID=2800000&amp;guid=5a725b8270930a44798e954e939aa282&amp;type=3#AnyTexture&apos;); width: 20%;" />
-            <ui:VisualElement style="flex-grow: 1; width: 40%;" />
+            <ui:VisualElement name="Lebel180p" style="flex-grow: 1; background-image: none; width: 20%;">
+                <ui:Label tabindex="-1" text="Gaming over 180 minutes a day can affect your health." parse-escape-sequences="true" display-tooltip-when-elided="true" style="width: 100%; height: 100%; justify-content: center; align-items: center; flex-wrap: wrap; flex-direction: column; font-size: 43px; white-space: normal; -unity-text-align: middle-center; padding-right: 10px; padding-left: 10px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="BtnGroup" style="flex-grow: 1; width: 37.5%; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-around; margin-right: 2.5%;">
+                <ui:Button text="???" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DontKnow" style="font-size: 45px; -unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial;" />
+                <ui:Button text="setting" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SettingBtn" style="font-size: 45px; -unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial;" />
+                <ui:Button text="quit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="QuitBtn" style="font-size: 45px; -unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial;" />
+            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="Middle" style="flex-grow: 1; width: 100%; height: 40%; flex-direction: row; flex-wrap: wrap;">
-            <ui:VisualElement name="TankView" style="flex-grow: 1; width: 65%; flex-wrap: wrap;">
-                <ui:VisualElement name="SwitchTankBtnGroup" style="flex-grow: 1; width: 100%; flex-wrap: wrap; flex-direction: row; align-items: center; justify-content: space-around;">
-                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="LeftBtn" style="align-self: center; flex-direction: column; flex-wrap: wrap; width: 10%; height: 24%; background-image: url(&apos;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-2236324273849735119&amp;guid=e27533cdc82a4cf4697d70cb4646435e&amp;type=3#arrow-left@2x&apos;); background-color: rgba(0, 0, 0, 0.51);" />
-                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="RightBtn" style="align-self: center; flex-direction: column; flex-wrap: wrap; width: 10%; height: 24%; background-image: url(&apos;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-1087164816274819069&amp;guid=e27533cdc82a4cf4697d70cb4646435e&amp;type=3#arrow-right@2x&apos;); background-color: rgba(0, 0, 0, 0.51);" />
+        <ui:VisualElement name="Middle" style="flex-grow: 1; width: 100%; height: 65%; flex-direction: row; flex-wrap: wrap;">
+            <ui:VisualElement name="TankView" style="flex-grow: 1; width: 60%; flex-wrap: nowrap;">
+                <ui:VisualElement name="SwitchTankBtnGroup" style="flex-grow: 1; width: 100%; flex-wrap: wrap; flex-direction: row; align-items: center; justify-content: space-around; height: 70%;">
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="LeftBtn" style="align-self: center; flex-direction: column; flex-wrap: wrap; width: 150px; height: 150px; background-image: url(&apos;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-2236324273849735119&amp;guid=e27533cdc82a4cf4697d70cb4646435e&amp;type=3#arrow-left@2x&apos;); background-color: rgba(0, 0, 0, 0.51);" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="RightBtn" style="align-self: center; flex-direction: column; flex-wrap: wrap; width: 150px; height: 150px; background-image: url(&apos;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-1087164816274819069&amp;guid=e27533cdc82a4cf4697d70cb4646435e&amp;type=3#arrow-right@2x&apos;); background-color: rgba(0, 0, 0, 0.51);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="SelectTestBtn" style="flex-grow: 1; height: 30%; flex-wrap: wrap; align-items: center; justify-content: flex-start; align-self: auto;">
+                    <ui:Button text="test this tank" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SelectTestBtn" style="-unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial; font-size: 50px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="TankStats" style="flex-grow: 1; width: 35%; flex-wrap: wrap; background-color: rgba(0, 0, 0, 0.39); align-items: auto; justify-content: center; padding-top: 2.5%; padding-bottom: 2.5%;">
-                <ui:VisualElement name="1stLine" style="flex-grow: 1; width: 60%; align-self: center; align-items: auto; height: 10%; -unity-background-scale-mode: stretch-to-fill; background-color: rgba(176, 29, 29, 0.59);" />
-                <ui:VisualElement name="2ndLine" style="flex-grow: 1; width: 60%; align-self: center; align-items: auto; height: 10%; background-color: rgba(0, 156, 13, 0.98);" />
-                <ui:VisualElement name="3rdLine" style="flex-grow: 1; width: 60%; align-self: center; flex-direction: column; align-items: auto; height: 10%; background-color: rgb(10, 48, 63);" />
-                <ui:VisualElement name="4thLine" style="flex-grow: 1; width: 60%; align-self: center; height: 10%; background-color: rgba(199, 229, 38, 0.79);" />
+            <ui:VisualElement name="TankStats" style="flex-grow: 1; width: 35%; flex-wrap: wrap; background-color: rgba(0, 0, 0, 0.39); align-items: auto; justify-content: center; padding-top: 2.5%; padding-bottom: 2.5%; margin-right: 2.5%; margin-top: 0; margin-bottom: 0; margin-left: 2.5%;">
+                <ui:VisualElement name="1stLine" style="flex-grow: 1; width: 60%; align-self: center; align-items: center; height: 23.75%; -unity-background-scale-mode: stretch-to-fill; background-color: rgba(255, 255, 255, 0); justify-content: flex-start; flex-direction: row;">
+                    <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Damage" style="background-image: url(&apos;project://database/Assets/Mobile%20Game%20GUI%20Vector%20Pack/Sprite/Icon/5.png?fileID=2800000&amp;guid=ed111f2d5e576844d91d87f71d4a0530&amp;type=3#5&apos;); width: 50px; height: 50px;" />
+                    <ui:ProgressBar value="22" title="my-progress" />
+                </ui:VisualElement>
+                <ui:VisualElement name="2ndLine" style="flex-grow: 1; width: 60%; align-self: center; align-items: center; height: 23.75%; -unity-background-scale-mode: stretch-to-fill; background-color: rgba(255, 255, 255, 0); justify-content: flex-start; flex-direction: row;">
+                    <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Damage" style="background-image: url(&apos;project://database/Assets/Mobile%20Game%20GUI%20Vector%20Pack/Sprite/Icon/11.png?fileID=2800000&amp;guid=e30f2fee0192b414bb487cf073664f4c&amp;type=3#11&apos;); width: 50px; height: 50px;" />
+                    <ui:ProgressBar value="22" title="my-progress" />
+                </ui:VisualElement>
+                <ui:VisualElement name="3rdLine" style="flex-grow: 1; width: 60%; align-self: center; align-items: center; height: 23.75%; -unity-background-scale-mode: stretch-to-fill; background-color: rgba(255, 255, 255, 0); justify-content: flex-start; flex-direction: row;">
+                    <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Damage" style="background-image: url(&apos;project://database/Assets/_Heathen%20Engineering/Assets/UX/Icons/Flat%20Icons%20[Free]/Free%20Flat%20Battery%20Tick%203%20Icon.png?fileID=2800000&amp;guid=6c7218760d7e1b041a1cbf797895f78a&amp;type=3#Free Flat Battery Tick 3 Icon&apos;); width: 50px; height: 50px;" />
+                    <ui:ProgressBar value="22" title="my-progress" />
+                </ui:VisualElement>
+                <ui:VisualElement name="4thLine" style="flex-grow: 1; width: 60%; align-self: center; align-items: center; height: 23.75%; -unity-background-scale-mode: stretch-to-fill; background-color: rgba(255, 255, 255, 0); justify-content: flex-start; flex-direction: row;">
+                    <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Damage" style="background-image: url(&apos;project://database/Assets/Mobile%20Game%20GUI%20Vector%20Pack/Sprite/Icon/5.png?fileID=2800000&amp;guid=ed111f2d5e576844d91d87f71d4a0530&amp;type=3#5&apos;); width: 50px; height: 50px;" />
+                    <ui:ProgressBar value="22" title="my-progress" />
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="Bottom" style="flex-grow: 1; height: 15%; width: 100%; background-color: rgba(0, 0, 0, 0.36); margin-bottom: 5px;" />
+        <ui:VisualElement name="Bottom" style="flex-grow: 1; height: 10%; width: 100%; background-color: rgba(0, 0, 0, 0); margin-bottom: 5px; flex-direction: row;">
+            <ui:VisualElement name="Left" style="flex-grow: 1; width: 60%; height: 100%; flex-wrap: wrap; align-items: flex-start; justify-content: center;">
+                <ui:Label tabindex="-1" text="Game version: v1.0.0" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 45px; -unity-text-align: middle-left;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Right" style="flex-grow: 1; height: 100%; width: 35%; align-items: center; justify-content: center; margin-top: 0; margin-right: 2.5%; margin-bottom: 0; margin-left: 2.5%;">
+                <ui:Button text="Lobby" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ToLobbyBtn" style="align-items: auto; justify-content: flex-start; -unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial; font-size: 50px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

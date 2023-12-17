@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Cell" style="flex-grow: 1; flex-direction: row; height: auto; max-height: 250px; justify-content: flex-start; align-items: center;">
+        <ui:VisualElement name="RoomName" style="flex-grow: 1; width: 30%; align-items: center;">
+            <ui:Label tabindex="-1" text="Room" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RoomNameLabel" style="align-items: auto; -unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial; font-size: 50px; color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="NumberOfPlayer" style="flex-grow: 1; width: 10%; align-items: center; -unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial;">
+            <ui:Label tabindex="-1" text="Player" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumbOfPlayerLabel" style="font-size: 50px; color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Map" style="flex-grow: 1; width: 30%; align-items: center;">
+            <ui:Label tabindex="-1" text="Map" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MapLabel" style="color: rgb(255, 255, 255); font-size: 50px; -unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Mode" style="flex-grow: 1; width: 30%; align-items: center; -unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial; font-size: 50px;">
+            <ui:Label tabindex="-1" text="Mode" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ModeLabel" style="color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
