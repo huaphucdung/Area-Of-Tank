@@ -11,6 +11,11 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera targetCamera;
 
     public static Action ShowMainMenuUI;
+    public static Action NextLeftTankAction;
+    public static Action NextRightTankAction;
+    public static Action TestTankAction;
+    public static Action ExitTestTankAction;
+    public static Action JoinLobbyAction;
 
     private List<TankModule> tankList;
     private int currentIndex = 0;
@@ -27,6 +32,15 @@ public class MainMenu : MonoBehaviour
         ShowMainMenuUI += ShowUI;
         Initialize();
         UIManager.HideAllUI<LoadingUI>();
+
+
+        NextLeftTankAction += NextLeftTank;
+        NextRightTankAction += NextRightTank;
+        TestTankAction += TestTank;
+        ExitTestTankAction += ExitTest;
+        JoinLobbyAction += JoinLobby;
+
+        Lobby.joinLobbySuccessAction += HideUI;
     }
 
     private void ShowUI()
@@ -43,7 +57,7 @@ public class MainMenu : MonoBehaviour
     private void FixedUpdate()
     {
         if (!IsTest) return;
-        //if (currentTank == null) Debug.Log("Null current tank");
+        
         currentTank?.Move(InputManager.playerAction.Move.ReadValue<Vector2>());
         currentTank?.TurretRotate(InputManager.playerAction.MousePosition.ReadValue<Vector2>());
     }
@@ -69,8 +83,8 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    [Button]
-    public void NextLeftTank()
+    
+    private void NextLeftTank()
     {
         if(currentIndex == 0)
         {
@@ -83,8 +97,8 @@ public class MainMenu : MonoBehaviour
         SwapTank();
     }
 
-    [Button]
-    public void NextRightTank()
+    
+    private void NextRightTank()
     {
         if (currentIndex == tankList.Count - 1)
         {
@@ -97,19 +111,18 @@ public class MainMenu : MonoBehaviour
         SwapTank();
     }
 
-    [Button]
-    public void TestTank()
+    
+    private void TestTank()
     {
         IsTest = true;
         InputManager.EnablePlayerAction();
         InputManager.playerAction.Shoot.started += Shoot;
         currentTank?.TankDefault();
-
         targetCamera.gameObject.SetActive(true);
+        ui.Hide();
     }
 
-    [Button]
-    public void ExitTest()
+    private void ExitTest()
     {
         IsTest = false;
         InputManager.DisablePlayerAction();
@@ -119,10 +132,11 @@ public class MainMenu : MonoBehaviour
 
         targetCamera.gameObject.SetActive(false);
         currentTank?.SetPosition(tankTransform.position, tankTransform.rotation);
+        ui.Show();
     }
 
-    [Button]
-    public void JoinLobby()
+    
+    private void JoinLobby()
     {
         PhotonManager.JoinLobby();
     }

@@ -5,11 +5,12 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class Lobby : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera roomCamera;
-
+    [SerializeField] private PostProcessVolume postProcessVolume;
     public static Action<List<RoomInfo>> roomListChangeAction;
 
     public static Action joinLobbySuccessAction;
@@ -19,6 +20,8 @@ public class Lobby : MonoBehaviour
     public static Action joinRoomSuccessAction;
     public static Action joinRoomFailseAction;
     public static Action leaveRoomAction;
+
+    private LobbyUI ui;
 
     private static ExitGames.Client.Photon.Hashtable defaultData = new ExitGames.Client.Photon.Hashtable
         {
@@ -79,7 +82,12 @@ public class Lobby : MonoBehaviour
     #region Callback Methods
     private void OnJoinLooby()
     {
-        Debug.Log("Join Lobby Success");
+        DepthOfField pr;
+        if (postProcessVolume.sharedProfile.TryGetSettings<DepthOfField>(out pr))
+        {
+            pr.focusDistance.overrideState = true;
+        }
+        ui = UIManager.GetAndShowUI<LobbyUI>();
     }
 
     private void OnCreateRoom()

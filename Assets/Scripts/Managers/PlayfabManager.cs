@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class PlayfabManager : MonoBehaviour
 {
+    public static event Action<string> ErrorMessageAction;
+
     public static void Login(string username, string password)
     {
         var request = new LoginWithPlayFabRequest
@@ -43,7 +45,7 @@ public class PlayfabManager : MonoBehaviour
 
     private static void OnError(PlayFabError obj)
     {
-        Debug.Log(obj.ErrorMessage);
+        ErrorMessageAction?.Invoke(obj.ErrorMessage);
     }
 
     public static void GetPlayerData()

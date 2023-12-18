@@ -45,7 +45,7 @@ public class LoginRegister : MonoBehaviour
     private void SwitchToRegister()
     {
         loginUI.Hide();
-        registerUI.Hide();
+        registerUI.Show();
     }
 
     private void SwitchToMainMenu()
@@ -55,25 +55,6 @@ public class LoginRegister : MonoBehaviour
         MainMenu.ShowMainMenuUI?.Invoke();
     }
 
-    //Test
-    [Button]
-    private void TestLogin(string username, string password)
-    {
-        loginAccountAction?.Invoke(username, password);
-    }
-
-    [Button]
-    private void TestRegister(string displayName, string username, string password)
-    {
-        registerAction?.Invoke(displayName, username, password);
-    }
-
-    [Button]
-    private void TestConnectServer()
-    {
-        Debug.Log(PhotonManager.IsConnected());
-        Debug.Log(PhotonNetwork.LocalPlayer.UserId);
-    }
 
     #region Callback Methods
     private void OnLoginSuccess(string playerID)

@@ -24,7 +24,7 @@
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="RightBtn" style="align-self: center; flex-direction: column; flex-wrap: wrap; width: 150px; height: 150px; background-image: url(&apos;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-1087164816274819069&amp;guid=e27533cdc82a4cf4697d70cb4646435e&amp;type=3#arrow-right@2x&apos;); background-color: rgba(0, 0, 0, 0.51);" />
                 </ui:VisualElement>
                 <ui:VisualElement name="SelectTestBtn" style="flex-grow: 1; height: 30%; flex-wrap: wrap; align-items: center; justify-content: flex-start; align-self: auto;">
-                    <ui:Button text="test this tank" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SelectTestBtn" style="-unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial; font-size: 50px;" />
+                    <ui:Button text="test this tank" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TestBtn" style="-unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial; font-size: 50px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="TankStats" style="flex-grow: 1; width: 35%; flex-wrap: wrap; background-color: rgba(0, 0, 0, 0.39); align-items: auto; justify-content: center; padding-top: 2.5%; padding-bottom: 2.5%; margin-right: 2.5%; margin-top: 0; margin-bottom: 0; margin-left: 2.5%;">
