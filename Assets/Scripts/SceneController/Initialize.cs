@@ -16,10 +16,10 @@ public class Initialize : MonoBehaviour
     {
         LoadingUI loading = UIManager.GetAndShowUI<LoadingUI>();
         yield return Timing.WaitUntilDone(Timing.RunCoroutine(ResourceManager.initCoroutine));
-
+        
         InputManager.Initialzie();
         InputManager.Enable();
-
+        yield return Timing.WaitForSeconds(1);
         SceneManager.LoadScene("Menu");
     }
 }

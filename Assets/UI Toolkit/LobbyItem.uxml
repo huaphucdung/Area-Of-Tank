@@ -1,16 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="Cell" style="flex-grow: 1; flex-direction: row; height: auto; max-height: 250px; justify-content: flex-start; align-items: center;">
-        <ui:VisualElement name="RoomName" style="flex-grow: 1; width: 30%; align-items: center;">
-            <ui:Label tabindex="-1" text="Room" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RoomNameLabel" style="align-items: auto; -unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial; font-size: 50px; color: rgb(255, 255, 255);" />
-        </ui:VisualElement>
-        <ui:VisualElement name="NumberOfPlayer" style="flex-grow: 1; width: 10%; align-items: center; -unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial;">
-            <ui:Label tabindex="-1" text="Player" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumbOfPlayerLabel" style="font-size: 50px; color: rgb(255, 255, 255);" />
-        </ui:VisualElement>
-        <ui:VisualElement name="Map" style="flex-grow: 1; width: 30%; align-items: center;">
-            <ui:Label tabindex="-1" text="Map" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MapLabel" style="color: rgb(255, 255, 255); font-size: 50px; -unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial;" />
-        </ui:VisualElement>
-        <ui:VisualElement name="Mode" style="flex-grow: 1; width: 30%; align-items: center; -unity-font: resource(&apos;Fonts/Robot Crush&apos;); -unity-font-definition: initial; font-size: 50px;">
-            <ui:Label tabindex="-1" text="Mode" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ModeLabel" style="color: rgb(255, 255, 255);" />
-        </ui:VisualElement>
+    <ui:VisualElement name="LobbyItem" style="flex-grow: 1; flex-direction: row; height: 100px; max-height: 250px; justify-content: center; align-items: auto; background-color: rgba(98, 98, 98, 0.89); flex-wrap: nowrap; border-top-width: 5px; border-right-width: 5px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; border-bottom-width: 5px; border-left-width: 5px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" style="margin-top: auto; margin-right: auto; margin-bottom: auto; margin-left: auto; width: 20%; height: 100%; align-items: auto; -unity-text-align: middle-center; font-size: 20px;" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumberPlayer" style="margin-top: auto; margin-right: auto; margin-bottom: auto; margin-left: auto; width: 20%; height: 100%; -unity-text-align: middle-center; font-size: 20px;" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Mode" style="margin-top: auto; margin-right: auto; margin-bottom: auto; margin-left: auto; width: 20%; height: 100%; -unity-text-align: middle-center; font-size: 20px;" />
+        <ui:VisualElement name="Map" style="flex-grow: 1; margin-top: auto; margin-right: auto; margin-bottom: auto; margin-left: auto; width: 20%; align-items: auto; opacity: 1; display: flex; overflow: visible; visibility: visible; flex-basis: auto; height: 100%;" />
     </ui:VisualElement>
 </ui:UXML>

@@ -1,9 +1,10 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class BaseUI : MonoBehaviour
+public class BaseUI : MonoBehaviourPunCallbacks
 {
     protected UIData data;
     protected UIShowData showData;

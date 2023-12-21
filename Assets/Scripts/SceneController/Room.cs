@@ -16,18 +16,30 @@ public class Room : MonoBehaviour
     public static Action<Player> hasPlayerJoinRoomAction;
     public static Action<Player> hasPlayerLeaveRoomAction;
 
-    private Dictionary<int, Player> playersInRoom;
+    
+    public static Func<bool> readyAction;
+
+    private Dictionary<Player, RoomItem> playerItems;
     private int numberPlayerInRoom;
+    private bool ready;
+    private RoomUI ui;
+
+    private int index = 1;
 
     private void Awake()
     {
-        Lobby.joinRoomSuccessAction += ShowPlayerInRoom;
-
+        Lobby.joinRoomSuccessAction += OnJoinRoom;
+        Lobby.leaveRoomAction += OnLeftRoom;
         roomSettingUpdateAction += OnRoomSettingUpdate;
         playerSettingInRoomUpdateAction += OnPlayerInRoomUpdate;
+
+        hasPlayerJoinRoomAction += OnNewPlayerEnter;
+        hasPlayerLeaveRoomAction += OnPlayerLeft;
+
+        readyAction += SwapReady;
     }
 
-
+   
     private void Start()
     {
         Initialize();
@@ -35,14 +47,28 @@ public class Room : MonoBehaviour
 
     private void Initialize()
     {
-        foreach(var item in roomItems)
+        playerItems = new Dictionary<Player, RoomItem>();
+        foreach (var item in roomItems)
         {
             item.Initialize();
-            item.gameObject.SetActive(false);
+            item.SetEmpty();
         }
     }
 
-    [Button]
+    private void ShowUI()
+    {
+        ui = UIManager.GetAndShowUI<RoomUI>(null, new UIShowRoomData()
+        {
+            currentRoom = PhotonManager.GetCurrentRoom()
+        });
+        ready = false;
+    }
+
+    private void HideUI()
+    {
+        ui.Hide();
+    }
+
     public static void LeaveRoom()
     {
         PhotonManager.LeaveRoom();
@@ -51,27 +77,39 @@ public class Room : MonoBehaviour
     //NEED FIX IT
     private void ShowPlayerInRoom()
     {
-        playersInRoom = PhotonManager.GetPlayerInRoom();
-        numberPlayerInRoom = PhotonManager.GetNumberPlayerInRoom();
-        int index = 1;
-        foreach(var dictionary in playersInRoom)
+        playerItems.Clear();
+        foreach (var item in roomItems)
         {
-            RoomItem item = null;
+            item.SetEmpty();
+        } 
+        numberPlayerInRoom = PhotonManager.GetNumberPlayerInRoom();
+        index = 1;
+        foreach (KeyValuePair<int, Player> dictionary in PhotonManager.GetPlayerInRoom())
+        {
             Player player = dictionary.Value;
-            if(player.IsLocal)
+            Debug.Log(player.UserId);
+            if (player.IsLocal)
             {
                 //Check play is Local Player
-                item = roomItems[0];
+                AddPlayer(player, 0);
+
             }
             else
             {
-                item = roomItems[index];
+                AddPlayer(player, index);
+                index++;
             }
-
-            item.SetPlayer(player);
-            item.gameObject.SetActive(true);
-            index++;
         }
+    }
+
+    private void AddPlayer(Player player, int position)
+    {
+        RoomItem item = roomItems[position];
+        
+        ui.AddPlayerValue(player, position);
+        item.gameObject.SetActive(true);
+        item.SetPlayer(player);
+        playerItems.Add(player, item);
     }
 
     private void SettingRoom(string map, string mode)
@@ -97,5 +135,34 @@ public class Room : MonoBehaviour
     private void OnPlayerInRoomUpdate(Player arg1, Hashtable arg2)
     {
     }
+
+    private void OnJoinRoom()
+    {
+        ShowUI();
+        ShowPlayerInRoom();
+    }
+
+    private void OnLeftRoom()
+    {
+        HideUI();
+    }
+
+    private void OnNewPlayerEnter(Player player)
+    {
+        AddPlayer(player, index);
+        index++;
+    }
+
+    private void OnPlayerLeft(Player player)
+    {
+        ShowPlayerInRoom();
+    }
+
     #endregion
+
+    private bool SwapReady()
+    {
+        ready = !ready;
+        return ready;
+    }
 }

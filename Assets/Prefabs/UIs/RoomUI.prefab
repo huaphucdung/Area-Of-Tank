@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5845157066767371139}
   - component: {fileID: 4324495257538116218}
-  - component: {fileID: 7678300290055083823}
+  - component: {fileID: 3933084496011389426}
   m_Layer: 0
   m_Name: RoomUI
   m_TagString: Untagged
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: d9c003e29e7b61a48944e66f7d99e886, type: 3}
   m_SortingOrder: 0
---- !u!114 &7678300290055083823
+--- !u!114 &3933084496011389426
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,6 +58,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2051296958245331566}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a468aaeb2032a3438b905cec62dc43a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5729646c7183f60419f7e72619d47d14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomItem: {fileID: 9197481963319205126, guid: 56c12b6f86afda740a61b84ff3ec938d, type: 3}

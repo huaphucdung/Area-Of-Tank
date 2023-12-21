@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using MEC;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
     public static string roomNameCreate;
+
+    private bool inLobby;
 
     private void Awake()
     {
@@ -18,7 +21,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsConnected)
         {
-            /*PhotonNetwork.AutomaticallySyncScene = true;*/
+
             PhotonNetwork.GameVersion = "v1";
             PhotonNetwork.AuthValues = new AuthenticationValues(userID);
             PhotonNetwork.ConnectUsingSettings();
@@ -28,6 +31,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("On Connected");
+        if (inLobby) PhotonNetwork.JoinLobby();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -48,9 +52,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }
 
     public static void JoinLobby()
-    {        
+    {
         if (!PhotonNetwork.IsConnected) return;
-        PhotonNetwork.JoinLobby(TypedLobby.Default);
+        PhotonNetwork.JoinLobby();
     }
 
     public static void LeaveLobby()
@@ -62,17 +66,21 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public static void CreateRoom(string roomName, string map, string mode)
     {
         roomNameCreate = roomName;
-        PhotonNetwork.CreateRoom(roomName, new RoomOptions
+        RoomOptions option = new RoomOptions()
         {
             MaxPlayers = 4,
             IsVisible = true,
             IsOpen = true,
-            CustomRoomProperties = new ExitGames.Client.Photon.Hashtable
+            PublishUserId = true,
+            CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
             {
                 {"map", map},
-                {"mode", mode}
-            }
-        });
+                {"mode", mode }
+            },
+            CustomRoomPropertiesForLobby = new string[] { "map", "mode" }
+        };
+
+        PhotonNetwork.CreateRoom(roomName, option, TypedLobby.Default);
     }
 
     public static void JoinRoom(string roomName)
@@ -96,7 +104,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
-    {  
+    {
     }
 
     public override void OnJoinedLobby()
@@ -106,13 +114,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftLobby()
     {
-        Lobby.leaveRoomAction?.Invoke();
+        Lobby.leftLobbySuccessAction?.Invoke();
     }
 
-    
+
     #endregion
 
     #region Room
+    public static Photon.Realtime.Room GetCurrentRoom()
+    {
+        return PhotonNetwork.CurrentRoom;
+    }
+
     public static void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
@@ -144,6 +157,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Room.playerSettingInRoomUpdateAction?.Invoke(targetPlayer, changedProps);
     }
 
+  
+
     public override void OnJoinedRoom()
     {
         Lobby.joinRoomSuccessAction?.Invoke();
@@ -161,6 +176,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+        inLobby = true;
+        Lobby.leaveRoomAction?.Invoke();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -177,6 +194,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         return PhotonNetwork.InRoom;
     }
+
+    public static bool IsHost()
+    {
+        return PhotonNetwork.IsMasterClient;
+    }
+
+
     #endregion
 
     #region Player

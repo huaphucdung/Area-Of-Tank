@@ -11,8 +11,8 @@ public class ResourceManager : MonoBehaviour
     public PlayerDataSO defaultPlayerDataSO;
     public static PlayerDataSO currentPlayerDataSO;
     [Header("Json Datas:")]
-    [FilePath(ParentFolder = "Assets/Scripts/Datas/JsonFiles", Extensions = "json")] public string tankJson;
-    
+    [FilePath(ParentFolder = "Assets/StreamingAssets", Extensions = "json")] public string tankJson;
+
     public static Dictionary<string, TankStruct> _tankDataDictionary;
    
     public static IEnumerator<float> initCoroutine;
@@ -20,6 +20,7 @@ public class ResourceManager : MonoBehaviour
     [Header("Rerference Datas:")]
     [SerializeField] private TankReferenceSO tankReferenceSO;
     [SerializeField] private MapReferenceSO mapReferenceSO;
+    [SerializeField] private ModeReferenceSO modeReferenceSO;
 
     private void Awake()
     {
@@ -42,17 +43,21 @@ public class ResourceManager : MonoBehaviour
 
         tankReferenceSO.Initialize();
         mapReferenceSO.Initialize();
+        modeReferenceSO.Initialize();
 
         yield return Timing.WaitUntilDone(Timing.RunCoroutine(LoadTankData(tankJson)));
+        
     }
 
     IEnumerator<float> LoadTankData(string fileName)
     {
-        string filePath = Path.Combine("Assets/Scripts/Datas/JsonFiles", fileName);
+        Debug.Log(1);
+        string filePath = Path.Combine(Application.streamingAssetsPath , fileName);
+        Debug.Log(filePath);
         if (!File.Exists(filePath)) yield break;
 
         string jsonText = File.ReadAllText(filePath);
-
+        
         _tankDataDictionary = JsonConvert.DeserializeObject<Dictionary<string, TankStruct>>(jsonText);
         yield return Timing.WaitForOneFrame;
         Debug.Log("Finish load tank datas");

@@ -1698,9 +1698,17 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1888104247}
+    - target: {fileID: 7511472700206871542, guid: 060649cde9c553c448d11d4d09a890ea, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8868736689359657994, guid: 060649cde9c553c448d11d4d09a890ea, type: 3}
       propertyPath: m_Name
       value: LocalPlayer (RoomItem)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868736689359657994, guid: 060649cde9c553c448d11d4d09a890ea, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

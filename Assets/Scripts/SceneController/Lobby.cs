@@ -7,13 +7,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class Lobby : MonoBehaviour
+public class Lobby : MonoBehaviourPunCallbacks
 {
     [SerializeField] private CinemachineVirtualCamera roomCamera;
     [SerializeField] private PostProcessVolume postProcessVolume;
     public static Action<List<RoomInfo>> roomListChangeAction;
 
     public static Action joinLobbySuccessAction;
+
+    public static Action leftLobbySuccessAction;
 
     public static Action createRoomSuccessAction;
 
@@ -34,6 +36,7 @@ public class Lobby : MonoBehaviour
         roomListChangeAction += OnRoomListUpdate;
 
         joinLobbySuccessAction += OnJoinLooby;
+        leftLobbySuccessAction += OnLeftLobby;
 
         createRoomSuccessAction += OnCreateRoom;
 
@@ -42,31 +45,29 @@ public class Lobby : MonoBehaviour
         leaveRoomAction += OnLeaveRoom;
     }
 
+    
     private void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        //Show room list in UI
+        if (ui == null) return;
+        ui.ShowListRoom(roomList);
     }
 
-    [Button]
     public static void LeaveLobby()
     {
         PhotonManager.LeaveLobby();
     }
 
-    [Button]
     public static void JoinRoomRandom()
     {
         PhotonManager.JoinRoomRandom();
     }
 
-    [Button]
     public static void JoinRoom(string roomName)
     {
         SetDefaultPlayerData();
         PhotonManager.JoinRoom(roomName);
     }
 
-    [Button]
     public static void CreateRoom(string roomName, string map, string mode)
     {
         SetDefaultPlayerData();
@@ -82,12 +83,14 @@ public class Lobby : MonoBehaviour
     #region Callback Methods
     private void OnJoinLooby()
     {
-        DepthOfField pr;
-        if (postProcessVolume.sharedProfile.TryGetSettings<DepthOfField>(out pr))
-        {
-            pr.focusDistance.overrideState = true;
-        }
-        ui = UIManager.GetAndShowUI<LobbyUI>();
+        ShowUI();
+    }
+
+  
+    private void OnLeftLobby()
+    {
+        HideUI();
+        MainMenu.ShowMainMenuUI?.Invoke();
     }
 
     private void OnCreateRoom()
@@ -97,9 +100,8 @@ public class Lobby : MonoBehaviour
 
     private void OnJoinRoomSuccess()
     {
-        Debug.Log("Join Room Success");
+        HideUI();
         roomCamera.gameObject.SetActive(true);
-        //Medthod default data when join new room
     }
 
     private void OnJoinRoomFailse()
@@ -112,4 +114,24 @@ public class Lobby : MonoBehaviour
         roomCamera.gameObject.SetActive(false);
     }
     #endregion
+
+    private void ShowUI()
+    {
+        DepthOfField pr;
+        if (postProcessVolume.sharedProfile.TryGetSettings<DepthOfField>(out pr))
+        {
+            pr.focusDistance.overrideState = true;
+        }
+        ui = UIManager.GetAndShowUI<LobbyUI>();
+    }
+
+    private void HideUI()
+    {
+        DepthOfField pr;
+        if (postProcessVolume.sharedProfile.TryGetSettings<DepthOfField>(out pr))
+        {
+            pr.focusDistance.overrideState = false;
+        }
+        ui.Hide();
+    }
 }

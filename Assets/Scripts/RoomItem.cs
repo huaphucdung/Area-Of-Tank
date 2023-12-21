@@ -17,10 +17,9 @@ public class RoomItem : MonoBehaviour
     private Dictionary<string, TankModule> dictionaryTank;
     private bool _isReady;
     private Player _player;
-
     public bool IsReady => _isReady;
     private TankModule _currentTank;
-    [Button]
+    
     public void Initialize()
     {
         dictionaryTank = new Dictionary<string, TankModule>();
@@ -30,13 +29,18 @@ public class RoomItem : MonoBehaviour
             dictionaryTank[tankType] = TankReferenceSO.InstanceTank(tankType, transform, Quaternion.Euler(tankRotation)).GetComponent<TankModule>();
             dictionaryTank[tankType].gameObject.SetActive(false);
         }
-        /*ActiveTank(type);*/
     }
 
     public void SetPlayer(Player player)
     {
         _player = player;
         ActiveTank((string) _player.CustomProperties["TankType"]);
+    }
+
+    public void SetEmpty()
+    {
+        _player = null;
+        gameObject.SetActive(false);
     }
 
     private void ActiveTank(string tankType)
@@ -66,5 +70,4 @@ public class RoomItem : MonoBehaviour
         text.text = "PlayerName";
     }
 
-    
 }
