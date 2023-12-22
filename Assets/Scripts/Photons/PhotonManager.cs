@@ -137,14 +137,20 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.CustomProperties.Add("mode", mode);
     }
 
-    public static void LocalPlayerChangeTankType(string tankType)
+    public static void LocalPlayerChangeTank(string tankType)
     {
-        PhotonNetwork.LocalPlayer.CustomProperties.Add("TankType", tankType);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() {
+            {"Ready", (bool) GetLocalPlayer().CustomProperties["Ready"]},
+            {"TankType", tankType}
+        });
     }
 
-    public static void LocalPlayerReadAndUnready(bool value)
+    public static void LocalPlayerChangeReady(bool value)
     {
-        PhotonNetwork.LocalPlayer.CustomProperties.Add("Ready", value);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() {
+            {"Ready", value},
+            {"TankType", (string) GetLocalPlayer().CustomProperties["TankType"]}
+        });
     }
 
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
@@ -154,13 +160,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
+        Debug.Log("Update");
         Room.playerSettingInRoomUpdateAction?.Invoke(targetPlayer, changedProps);
     }
 
-  
+
 
     public override void OnJoinedRoom()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         Lobby.joinRoomSuccessAction?.Invoke();
     }
 
@@ -177,6 +185,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         inLobby = true;
+        PhotonNetwork.AutomaticallySyncScene = false;
         Lobby.leaveRoomAction?.Invoke();
     }
 
@@ -204,6 +213,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region Player
+    public static Player GetLocalPlayer()
+    {
+        return PhotonNetwork.LocalPlayer;
+    }
+
     public static Dictionary<int, Player> GetPlayerInRoom()
     {
         if (!IsInRoom()) return null;
@@ -216,4 +230,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         return PhotonNetwork.CurrentRoom.PlayerCount;
     }
     #endregion
+
+    public static void LoadScene(string nameScene)
+    {
+        PhotonNetwork.LoadLevel(nameScene);
+    }
 }

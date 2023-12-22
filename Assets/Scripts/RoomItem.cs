@@ -34,7 +34,7 @@ public class RoomItem : MonoBehaviour
     public void SetPlayer(Player player)
     {
         _player = player;
-        ActiveTank((string) _player.CustomProperties["TankType"]);
+        ChangeTank(player.CustomProperties["TankType"] as string);
     }
 
     public void SetEmpty()

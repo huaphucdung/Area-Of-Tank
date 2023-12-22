@@ -1,3 +1,4 @@
+
 using Photon.Realtime;
 using System;
 using System.Collections;
@@ -7,7 +8,6 @@ using UnityEngine.UIElements;
 
 public class RoomUI : BaseUI
 {
-    /*[SerializeField] VisualTreeAsset roomItem;*/
     [SerializeField] float left;
     [SerializeField] float top;
     private Button leaveRoomBtn;
@@ -71,21 +71,47 @@ public class RoomUI : BaseUI
     public override void Show(UIShowData data = null)
     {
         base.Show(data);
+
         SetRoomInfo(((UIShowRoomData)data).currentRoom);
-        ShowReadyOrNot(false);
+        ChangeReady(false);
 
         leaveRoomBtn.clicked += LeaveRoom;
-        readyAndUnreadyBtn.clicked += SwapReadAndUnready;
-    }
+        readyAndUnreadyBtn.clicked += ChangeReady;
 
-    private void SwapReadAndUnready()
-    {
-        ShowReadyOrNot(Room.readyAction.Invoke());
+        choiceLeftTankBtn.clicked += ChangeTankLeft;
+        choiceRightTankBtn.clicked += ChangeTankRight;
+
+        ShowUIForHost(PhotonManager.IsHost());
     }
 
     public override void Hide()
     {
         base.Hide();
+        leaveRoomBtn.clicked -= LeaveRoom;
+        readyAndUnreadyBtn.clicked -= ChangeReady;
+
+        choiceLeftTankBtn.clicked -= ChangeTankLeft;
+        choiceRightTankBtn.clicked -= ChangeTankRight;
+    }
+
+    private void ShowUIForHost(bool value)
+    {
+        if (value)
+        {
+            startBtn.SetEnabled(false);
+            startBtn.style.visibility = Visibility.Visible;
+            showSettingDialougeBtn.style.visibility = Visibility.Visible;
+        }
+        else
+        {
+            startBtn.style.visibility = Visibility.Hidden;
+            showSettingDialougeBtn.style.visibility = Visibility.Hidden;
+        }
+    }
+
+    private void ChangeReady()
+    {
+        ChangeReady(Room.readyAction.Invoke());
     }
 
     private void LeaveRoom()
@@ -93,9 +119,9 @@ public class RoomUI : BaseUI
         Room.LeaveRoom();
     }
 
-    private void ShowReadyOrNot(bool value)
+    private void ChangeReady(bool ready)
     {
-        if (value)
+        if (ready)
         {
             readyAndUnreadyBtn.text = "Unready";
             choiceLeftTankBtn.style.visibility = Visibility.Hidden;
@@ -106,6 +132,25 @@ public class RoomUI : BaseUI
             readyAndUnreadyBtn.text = "Ready";
             choiceLeftTankBtn.style.visibility = Visibility.Visible;
             choiceRightTankBtn.style.visibility = Visibility.Visible;
+        }
+    }
+
+    private void ChangeTankLeft()
+    {
+        Room.ChangeTank(-1);
+    }
+
+    private void ChangeTankRight()
+    {
+        Room.ChangeTank(1);
+    }
+
+    public void PlayerChangeValue(Player player, ExitGames.Client.Photon.Hashtable properties)
+    {
+        if (playerDictionary.ContainsKey(player))
+        {
+            VisualElement item = playerDictionary[player];
+            item.Q<Label>("Ready").style.visibility = ((bool)properties["Ready"]) ? Visibility.Visible : Visibility.Hidden;
         }
     }
 
@@ -139,7 +184,7 @@ public class RoomUI : BaseUI
     public void AddPlayerValue(Player player, int index)
     {
         VisualElement item = null;
-        
+
         switch (index)
         {
             case 1:
@@ -155,13 +200,41 @@ public class RoomUI : BaseUI
                 item = playerInfor0;
                 break;
         }
-       
+
         item.Q<Label>("PlayerName").text = player.UserId;
         item.Q<VisualElement>("HostIcon").style.visibility = (PhotonManager.IsHost()) ? Visibility.Visible : Visibility.Hidden;
-        item.Q<Label>("Ready").style.visibility = Visibility.Hidden;
+        item.Q<Label>("Ready").style.visibility = ((bool)player.CustomProperties["Ready"]) ? Visibility.Visible : Visibility.Hidden;
         item.style.visibility = Visibility.Visible;
         playerDictionary[player] = item;
+    }
 
+    public void HideAllPlayerUI()
+    {
+        playerDictionary.Clear();
+        playerInfor0.style.visibility = playerInfor0.Q<Label>("Ready").style.visibility = Visibility.Hidden;
+        playerInfor1.style.visibility = playerInfor1.Q<Label>("Ready").style.visibility = Visibility.Hidden;
+        playerInfor2.style.visibility = playerInfor2.Q<Label>("Ready").style.visibility = Visibility.Hidden;
+        playerInfor3.style.visibility = playerInfor3.Q<Label>("Ready").style.visibility = Visibility.Hidden;
+    }
+
+    public void EnableStartBtn(bool value)
+    {
+        startBtn.SetEnabled(value);
+        if (value)
+        {
+            startBtn.clicked += StartGame;
+        }
+        else
+        {
+            startBtn.clicked -= StartGame;
+
+        }
+    }
+
+    private void StartGame()
+    {
+        Hide();
+        PhotonManager.LoadScene("Gameplay");
     }
 }
 

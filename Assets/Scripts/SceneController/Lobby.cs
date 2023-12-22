@@ -77,7 +77,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 
     private static void SetDefaultPlayerData()
     {
-        PhotonNetwork.LocalPlayer.CustomProperties = defaultData;
+        PhotonNetwork.LocalPlayer.SetCustomProperties(defaultData);
     }
 
     #region Callback Methods

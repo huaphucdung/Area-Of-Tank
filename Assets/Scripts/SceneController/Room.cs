@@ -16,15 +16,16 @@ public class Room : MonoBehaviour
     public static Action<Player> hasPlayerJoinRoomAction;
     public static Action<Player> hasPlayerLeaveRoomAction;
 
-    
     public static Func<bool> readyAction;
 
-    private Dictionary<Player, RoomItem> playerItems;
-    private int numberPlayerInRoom;
     private bool ready;
     private RoomUI ui;
 
-    private int index = 1;
+    private int playerIndex = 1;
+    private static Dictionary<Player, RoomItem> playerItems;
+
+    private static List<string> listTankCanChoice;
+    private static int tankIndex = 0;
 
     private void Awake()
     {
@@ -39,7 +40,6 @@ public class Room : MonoBehaviour
         readyAction += SwapReady;
     }
 
-   
     private void Start()
     {
         Initialize();
@@ -74,16 +74,16 @@ public class Room : MonoBehaviour
         PhotonManager.LeaveRoom();
     }
 
-    //NEED FIX IT
     private void ShowPlayerInRoom()
     {
+        ui.HideAllPlayerUI();
         playerItems.Clear();
         foreach (var item in roomItems)
         {
             item.SetEmpty();
-        } 
-        numberPlayerInRoom = PhotonManager.GetNumberPlayerInRoom();
-        index = 1;
+        }
+       
+        playerIndex = 1;
         foreach (KeyValuePair<int, Player> dictionary in PhotonManager.GetPlayerInRoom())
         {
             Player player = dictionary.Value;
@@ -96,8 +96,8 @@ public class Room : MonoBehaviour
             }
             else
             {
-                AddPlayer(player, index);
-                index++;
+                AddPlayer(player, playerIndex);
+                playerIndex++;
             }
         }
     }
@@ -112,19 +112,29 @@ public class Room : MonoBehaviour
         playerItems.Add(player, item);
     }
 
+    private void ChangeReady(bool value)
+    {
+        PhotonManager.LocalPlayerChangeReady(value);
+    }
+
+    public static void ChangeTank(int value)
+    {
+        tankIndex += value;
+        if (tankIndex < 0) tankIndex = listTankCanChoice.Count - 1;
+        if (tankIndex >= listTankCanChoice.Count) tankIndex = 0;
+
+        if (playerItems.ContainsKey(PhotonManager.GetLocalPlayer()))
+        {
+            playerItems[PhotonManager.GetLocalPlayer()].ChangeTank(listTankCanChoice[tankIndex]);
+
+            PhotonManager.LocalPlayerChangeTank(listTankCanChoice[tankIndex]);
+        }
+    }
+
+
     private void SettingRoom(string map, string mode)
     {
         PhotonManager.UpdateRoomProperties(map, mode);
-    }
-
-    private void ChangeTankLocalPlayer(string tankType)
-    {
-        PhotonManager.LocalPlayerChangeTankType(tankType);
-    }
-
-    private void LocalPlayerReadyAndUnready(bool value)
-    {
-        PhotonManager.LocalPlayerReadAndUnready(value);
     }
 
     #region Callback Methods
@@ -132,14 +142,48 @@ public class Room : MonoBehaviour
     {
     }
 
-    private void OnPlayerInRoomUpdate(Player arg1, Hashtable arg2)
+    private void OnPlayerInRoomUpdate(Player player, Hashtable properties)
     {
+        ui.PlayerChangeValue(player, properties);
+        if (playerItems.ContainsKey(player))
+        {
+            playerItems[player].ChangeTank(properties["TankType"] as string);
+        }
+
+        //Check Is All Player Ready
+        ChechReadyForPlay();
+    }
+
+    private void ChechReadyForPlay()
+    {
+        if (PhotonManager.IsHost())
+        {
+            if (PhotonManager.GetNumberPlayerInRoom() < 2)
+            {
+                ui.EnableStartBtn(false);
+                return;
+            }
+
+            foreach (KeyValuePair<int, Player> dictionary in PhotonManager.GetPlayerInRoom())
+            {
+                Player one = dictionary.Value;
+                if (!(bool)one.CustomProperties["Ready"])
+                {
+                    ui.EnableStartBtn(false);
+                    return;
+                }
+            }
+
+            ui.EnableStartBtn(true);
+        }
     }
 
     private void OnJoinRoom()
     {
         ShowUI();
         ShowPlayerInRoom();
+        listTankCanChoice = ResourceManager.GetListTank();
+        tankIndex = 0;
     }
 
     private void OnLeftRoom()
@@ -149,8 +193,8 @@ public class Room : MonoBehaviour
 
     private void OnNewPlayerEnter(Player player)
     {
-        AddPlayer(player, index);
-        index++;
+        AddPlayer(player, playerIndex);
+        playerIndex++;
     }
 
     private void OnPlayerLeft(Player player)
@@ -163,6 +207,7 @@ public class Room : MonoBehaviour
     private bool SwapReady()
     {
         ready = !ready;
+        ChangeReady(ready);
         return ready;
     }
 }

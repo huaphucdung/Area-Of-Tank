@@ -68,9 +68,14 @@ public class ResourceManager : MonoBehaviour
         PlayfabManager.SavePlayerData(currentPlayerDataSO.GetDataForSave());
     }
 
-    [Button]
+   
     private static void TestCurrentData()
     {
         Debug.Log($"{currentPlayerDataSO.exp}, {currentPlayerDataSO.coin}");
+    }
+
+    public static List<string> GetListTank()
+    {
+        return currentPlayerDataSO.tankTypeList;
     }
 }
