@@ -5,88 +5,106 @@ using UnityEngine;
 using System;
 using Cinemachine;
 using MEC;
+using Photon.Pun;
+using UnityEngine.SceneManagement;
+using Photon.Realtime;
 
 public enum Type
 {
     Player
 }
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPunCallbacks
 {
     [Header("CameraSettings:")]
     [SerializeField] private CinemachineVirtualCamera cameraCV;
-    
+
     [Header("Settings:")]
     [SerializeField] private AssetReference playerPrefabs;
-    [SerializeField] private Transform playerParent;
 
-    private List<IController> controllers;
+    private PhotonView pv;
+
     private Map map;
 
-    public event Action<IController> createPlayerEvent;
     public static Action<IController> playerDeadAction;
 
     public static Action<Transform> setCameraTargetEvent;
    
+    private GameObject playerInstance;
+
+    private int numberPlayerLoaded;
+
+    private PlayerController pc;
 
     #region Unity
     private void Awake()
     {
         Initiazlie();
-        /*InstanceMap();*/
+        InstanceMap();
+
+        var handle = playerPrefabs.LoadAssetAsync<GameObject>();
+        handle.WaitForCompletion();
+        DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
+
+        playerInstance = handle.Result;
+        pool.ResourceCache.Add(playerInstance.name, playerInstance);
+
+        numberPlayerLoaded = 0;
+    }
+
+    private void Start()
+    {
+        pv = GetComponent<PhotonView>();
+        
+        pv.RPC("AllPlayerReady", RpcTarget.AllBuffered);
     }
 
     private void Update()
     {
-        if(controllers != null)
-        {
-            foreach (var controller in controllers)
-            {
-                controller.DoUpdate();
-            }
-        }    
+        pc?.DoUpdate();    
     }
 
     private void FixedUpdate()
     {
-        if (controllers != null)
-        {
-            foreach (var controller in controllers)
-            {
-                controller.DoFixedUpdate();
-            }
-        }
+        pc?.DoFixedUpdate();
     }
+
     #endregion
 
     #region Main Methods
     private void Initiazlie() {
-        controllers = new List<IController>();
-
-        setCameraTargetEvent += SetTargetCamera;
-        createPlayerEvent += OnPlayerCreated;
+        setCameraTargetEvent += SetTargetCamera; 
         playerDeadAction += OnPlayerDead;
     }
 
-    [Button]
     private void InstanceMap()
     {
-        map = MapReferenceSO.InstanceMap("Islan");
+        map = MapReferenceSO.InstanceMap(PhotonManager.GetCurrentRoom().CustomProperties["map"] as string);
     }
 
-    private void AddController(Type type, string tankType)
+    [PunRPC]
+    private void AllPlayerReady()
     {
-        switch (type)
-        {
-            default:
-                var handle = playerPrefabs.InstantiateAsync();
-                handle.WaitForCompletion();
-                AddPlayer(handle.Result, tankType);
-                break;
-        }
+        if (!PhotonManager.IsHost()) return;
+        numberPlayerLoaded++;
+        if (numberPlayerLoaded != PhotonManager.GetNumberPlayerInRoom()) return;
+
+        Debug.Log("All Player Finish Load");
+
+        pv.RPC("SpawnLocalPlayer", RpcTarget.All);
     }
 
-    private void AddPlayer(GameObject obj, string tankType)
+    [PunRPC]
+    private void SpawnLocalPlayer()
+    {
+        GameObject obj = PhotonNetwork.Instantiate(playerInstance.name, Vector3.zero, Quaternion.identity);
+        Player localPlayer = PhotonManager.GetLocalPlayer();
+
+        pc = (PlayerController) AddPlayer(obj, localPlayer.CustomProperties["TankType"] as string);
+    }
+    
+    [PunRPC]
+    private IController AddPlayer(GameObject obj, string tankType)
     {
         //Set Model Data
         IModel model = MVCFactory.CreateModel(Type.Player);
@@ -99,7 +117,8 @@ public class GameManager : MonoBehaviour
         //Set View
         IView view = MVCFactory.CreateView(Type.Player, obj);
         view.Initialize();
-        view.SpawnModel(new PlayerViewData { 
+        view.SpawnModel(new PlayerViewData
+        {
             keyModel = tankType.ToString()
         });
 
@@ -110,8 +129,8 @@ public class GameManager : MonoBehaviour
             model = model,
             view = view,
         });
-        controllers.Add(controller);
-        createPlayerEvent?.Invoke(controller);
+     
+        return controller;
     }
 
     private void SetTargetCamera(Transform transform = null)
@@ -119,13 +138,6 @@ public class GameManager : MonoBehaviour
         if (cameraCV == null) return;
         cameraCV.Follow = transform;
         cameraCV.LookAt = transform;
-    }
-
-    ///Test
-    [Button]
-    private void TestAddPlayer(string tankType)
-    {
-        AddController(Type.Player, tankType);
     }
 
     IEnumerator<float> NewPlayerTank(PlayerController PC, float wait = 0f)
@@ -137,14 +149,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Callback Methods
-    private void OnPlayerCreated(IController controller)
-    {
-        Debug.Log("Player Created Callback Trigger");
-        PlayerController PC = (PlayerController)controller;
-        PC.playerView.transform.SetParent(playerParent);
-        
-        Timing.RunCoroutine(NewPlayerTank(PC));
-    }
+    
 
     private void OnPlayerDead(IController controller)
     {

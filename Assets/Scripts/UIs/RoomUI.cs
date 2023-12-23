@@ -233,8 +233,7 @@ public class RoomUI : BaseUI
 
     private void StartGame()
     {
-        Hide();
-        PhotonManager.LoadScene("Gameplay");
+        PhotonManager.StartGameplay();
     }
 }
 

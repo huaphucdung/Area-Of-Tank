@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Room : MonoBehaviour
 {
@@ -138,8 +139,13 @@ public class Room : MonoBehaviour
     }
 
     #region Callback Methods
-    private void OnRoomSettingUpdate(Hashtable obj)
+    private void OnRoomSettingUpdate(Hashtable properties)
     {
+        if (properties.ContainsKey("start") && (bool) properties["start"])
+        {
+            ui.Hide();
+            if (PhotonManager.IsHost()) PhotonManager.LoadScene("Gameplay");
+        }
     }
 
     private void OnPlayerInRoomUpdate(Player player, Hashtable properties)

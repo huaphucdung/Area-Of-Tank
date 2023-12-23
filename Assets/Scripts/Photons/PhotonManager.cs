@@ -75,7 +75,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
             {
                 {"map", map},
-                {"mode", mode }
+                {"mode", mode },
             },
             CustomRoomPropertiesForLobby = new string[] { "map", "mode" }
         };
@@ -137,6 +137,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.CustomProperties.Add("mode", mode);
     }
 
+    public static void StartGameplay()
+    {
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() {
+            {"map", PhotonNetwork.CurrentRoom.CustomProperties["map"] as string},
+            {"mode", PhotonNetwork.CurrentRoom.CustomProperties["mode"] as string},
+            {"start", true}
+        });
+        
+    }
+
     public static void LocalPlayerChangeTank(string tankType)
     {
         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() {
@@ -155,6 +165,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
+        Debug.Log("Update Room");
         Room.roomSettingUpdateAction?.Invoke(propertiesThatChanged);
     }
 
