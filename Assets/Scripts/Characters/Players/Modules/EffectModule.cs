@@ -13,9 +13,9 @@ public class EffectModule : MonoBehaviour, ITakeEffect
 {
     [SerializeField] private List<BaseEffect> effects;
 
-    private PlayerModel data;
+    private IData data;
 
-    public void Initialize(PlayerModel data)
+    public void Initialize(IData data)
     {
         this.data = data;
     }

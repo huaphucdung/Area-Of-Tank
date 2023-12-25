@@ -1,4 +1,5 @@
 using MEC;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,23 +37,31 @@ public class TankModule : MonoBehaviour
     private BoxCollider[] _boxColliders;
 
     private TankStruct data;
-    private PlayerReusableData reusableData;
+    private ReusableData reusableData;
+    public PhotonView pv;
+
+    private bool isInit = false;
+    public bool IsInit => isInit;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponentInChildren<Animator>();
         _boxColliders = GetComponents<BoxCollider>();
+        pv = GetComponent<PhotonView>();
     }
 
-    public void Intialize(TankStruct _data, PlayerReusableData _reusableData)
+    public void Intialize(TankStruct _data, ReusableData _reusableData)
     {
         data = _data;
         reusableData = _reusableData;
+        isInit = true;
     }
 
+    [PunRPC]
     public void SetPosition(Vector3 position)
     {
+        Debug.Log("SDFdsfdsf");
         transform.position = position;
     }
 
@@ -88,18 +97,16 @@ public class TankModule : MonoBehaviour
         }
     }
 
-    public void Shot(PlayerController controller)
+    public void Shot()
     {
         if (reusableData.cooldown > Time.time) return;
         Debug.Log("Tank shot");
 
-        Shell tankShell = SpawnManager.GetShellEvent?.Invoke(gunEnd.position, Quaternion.Euler(turret.eulerAngles.x, turret.eulerAngles.y + 180, turret.eulerAngles.z)); /*new Quaternion(-turret.rotation.x, turret.rotation.y, turret.rotation.z, turret.rotation.w))*/;
+        Shell tankShell = SpawnManager.GetShellEvent?.Invoke(gunEnd.position, Quaternion.Euler(turret.eulerAngles.x, turret.eulerAngles.y + 180, turret.eulerAngles.z)); /*new Quaternion(-turret.rotation.x, turret.rotation.y, turret.rotation.z, turret.rotation.w));*/
         tankShell.SetData(new ShellData
         {
             damage = data.damage,
-            controller = controller,
-            isBuffDame = reusableData.IsBuffDame
-
+            
         });
         tankShell.Rb.AddForce(-turret.up.normalized * data.range, ForceMode.Force);
 

@@ -21,14 +21,16 @@ public class MainMenu : MonoBehaviour
     private int currentIndex = 0;
     private TankModule currentTank;
 
-    private PlayerReusableData reusableData = new PlayerReusableData();
+    private ReusableData reusableData;
     private bool IsTest;
     private MainMenuUI ui;
 
     private void Start()
     {
         tankList = new List<TankModule>();
+        reusableData = new ReusableData();
         IsTest = false;
+        
         ShowMainMenuUI += ShowUI;
         Initialize();
         UIManager.HideAllUI<LoadingUI>();
@@ -64,12 +66,14 @@ public class MainMenu : MonoBehaviour
 
     private void Shoot(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        currentTank?.Shot(null);
+        currentTank?.Shot();
     }
     #endregion
 
     private void Initialize()
     {
+        reusableData.Initialize();
+
         foreach (string tankType in TankReferenceSO.GetListTankType())
         {
             TankModule newTank = TankReferenceSO.InstanceTank(tankType, tankTransform.position, tankTransform.rotation).GetComponent<TankModule>();

@@ -27,20 +27,12 @@ public class TankReferenceSO : ScriptableObject
         }
     }
 
-    public static GameObject InstanceTank(string key)
+ 
+    public static GameObject PhotonInstantiateTank(string key, Vector3 position, Quaternion rotation)
     {
-        if (_tankDictionary != null || _tankDictionary.ContainsKey(key))
+        if (_tankDictionary != null && _tankDictionary.ContainsKey(key))
         {
-            return GameObject.Instantiate(_tankDictionary[key]);
-        }
-        return null;
-    }
-
-    public static GameObject PhotonInstanceTank(string key)
-    {
-        if (_tankDictionary != null || _tankDictionary.ContainsKey(key))
-        {
-            return PhotonNetwork.Instantiate(_tankDictionary[key].name, Vector3.zero, Quaternion.identity);
+            return PhotonNetwork.Instantiate(_tankDictionary[key].name, position, rotation);
         }
         return null;
     }

@@ -164,11 +164,11 @@ public class Room : MonoBehaviour
     {
         if (PhotonManager.IsHost())
         {
-            if (PhotonManager.GetNumberPlayerInRoom() < 2)
+            /*if (PhotonManager.GetNumberPlayerInRoom() < 2)
             {
                 ui.EnableStartBtn(false);
                 return;
-            }
+            }*/
 
             foreach (KeyValuePair<int, Player> dictionary in PhotonManager.GetPlayerInRoom())
             {

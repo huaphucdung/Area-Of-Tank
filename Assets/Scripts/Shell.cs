@@ -9,7 +9,6 @@ public class Shell : MonoBehaviour
     [SerializeField] private ParticleSystem boomEffect;
     [SerializeField] private AudioClip sound;
 
-    private PlayerController controller;
     private AudioSource _source;
     private MeshRenderer _render;
     private SphereCollider _sphereCollider;
@@ -51,7 +50,6 @@ public class Shell : MonoBehaviour
     {
         if (data == null || !(data is ShellData)) return;
 
-        controller = ((ShellData)data).controller;
         damage = Mathf.FloorToInt(((ShellData)data).damage * (((ShellData)data).isBuffDame? 1 : 1.5f));
     }
 
@@ -74,7 +72,6 @@ public class Shell : MonoBehaviour
 
 public class ShellData : IData
 {
-    public PlayerController controller;
     public int damage;
     public bool isBuffDame;
 }

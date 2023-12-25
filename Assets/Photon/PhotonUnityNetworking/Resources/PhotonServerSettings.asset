@@ -46,6 +46,10 @@ MonoBehaviour:
   - AddPlayerDicitonary
   - ShowTank
   - ShowTankSkin
+  - SetTankPoistion
+  - SetPosition
+  - FinishLoaded
+  - OnFinishLoaded
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

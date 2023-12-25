@@ -58515,7 +58515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 92573490032658973, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
       propertyPath: m_Name
-      value: UnitTankT34 Variant
+      value: UnitTankT34
       objectReference: {fileID: 0}
     - target: {fileID: 2656082128852805409, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -58580,6 +58580,10 @@ PrefabInstance:
     - target: {fileID: 3093308026641513742, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
       propertyPath: m_Center.z
       value: -0.08254099
+      objectReference: {fileID: 0}
+    - target: {fileID: 6542113740944720064, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -8,16 +8,16 @@ public class BaseEffect : MonoBehaviour, IEffect
     [SerializeField] private EffectType type;
     [SerializeField] private float duration = 3f;
     [SerializeField] protected ParticleSystem effect;
-    public virtual void StartEffect(PlayerModel data)
+    public virtual void StartEffect(IData data)
     {
-        Timing.RunCoroutine(DoEffect(data));
+        /*Timing.RunCoroutine(DoEffect(data));*/
     }
 
-    public virtual void EndEffect(PlayerModel data)
+    public virtual void EndEffect(IData data)
     {
     }
 
-    IEnumerator<float> DoEffect(PlayerModel data)
+    IEnumerator<float> DoEffect(IData data)
     {
         yield return Timing.WaitForSeconds(duration);
         EndEffect(data);
@@ -32,8 +32,8 @@ public class BaseEffect : MonoBehaviour, IEffect
 
 public interface IEffect
 {
-    void StartEffect(PlayerModel data);
-    void EndEffect(PlayerModel data);
+    void StartEffect(IData data);
+    void EndEffect(IData data);
 
     EffectType GetEffectType();
 }

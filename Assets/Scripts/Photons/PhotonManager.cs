@@ -219,8 +219,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         return PhotonNetwork.IsMasterClient;
     }
-
-
     #endregion
 
     #region Player
@@ -239,6 +237,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         if (!IsInRoom()) return 0;
         return PhotonNetwork.CurrentRoom.PlayerCount;
+    }
+
+    public static int GetPlayerIndex()
+    {
+        foreach(KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            if(player.Value == PhotonNetwork.LocalPlayer)
+            {
+                return player.Key;
+            }
+        }
+        return 0;
     }
     #endregion
 
