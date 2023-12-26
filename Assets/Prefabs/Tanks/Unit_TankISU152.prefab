@@ -33897,6 +33897,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4138533772033501466}
   - component: {fileID: 4266552736028280722}
+  - component: {fileID: 9023398543585566778}
   m_Layer: 7
   m_Name: BoneTurretTurn
   m_TagString: Untagged
@@ -33942,6 +33943,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.4988065, y: 2.2027457, z: 1.2590528}
   m_Center: {x: -0.009251833, y: -0.120274276, z: 0.49960932}
+--- !u!114 &9023398543585566778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6375608159735713053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &6402144017101032469
 GameObject:
   m_ObjectHideFlags: 0
@@ -48761,6 +48778,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7389843991318203522}
   - component: {fileID: 5902655285186778006}
+  - component: {fileID: 3035318735895673556}
   m_Layer: 6
   m_Name: Tank_ISU152
   m_TagString: Untagged
@@ -48805,6 +48823,58 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3035318735895673556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8036627221135657455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 1
+    Name: Move
+  - Type: 1
+    SynchronizeType: 1
+    Name: Turn
+  - Type: 9
+    SynchronizeType: 1
+    Name: Shot
+  - Type: 9
+    SynchronizeType: 1
+    Name: Dead1
+  - Type: 9
+    SynchronizeType: 1
+    Name: Dead2
+  - Type: 9
+    SynchronizeType: 1
+    Name: Dead3
+  - Type: 9
+    SynchronizeType: 1
+    Name: Dead4
+  - Type: 9
+    SynchronizeType: 1
+    Name: Free1
+  - Type: 9
+    SynchronizeType: 1
+    Name: Free2
+  - Type: 9
+    SynchronizeType: 1
+    Name: Free3
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
+  - SynchronizeType: 1
+    LayerIndex: 1
+  - SynchronizeType: 1
+    LayerIndex: 2
 --- !u!1 &8364630749581198699
 GameObject:
   m_ObjectHideFlags: 0
@@ -58530,7 +58600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 92573490032658973, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
       propertyPath: m_Name
-      value: Unit_TankISU152 Variant
+      value: Unit_TankISU152
       objectReference: {fileID: 0}
     - target: {fileID: 92573490032658973, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
       propertyPath: m_Layer
@@ -58600,6 +58670,14 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.064493656
       objectReference: {fileID: 0}
+    - target: {fileID: 3682840077135838750, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682840077135838750, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 9023398543585566778}
     - target: {fileID: 5349173673151907167, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
       propertyPath: m_Layer
       value: 6

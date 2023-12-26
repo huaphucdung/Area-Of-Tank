@@ -39446,6 +39446,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9200815356550292469}
   - component: {fileID: 1472389937921542385}
+  - component: {fileID: 2336825272637320995}
   m_Layer: 7
   m_Name: BoneTurretTurn
   m_TagString: Untagged
@@ -39491,6 +39492,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.6342354, y: 1.900205, z: 1.1432143}
   m_Center: {x: -0.010229617, y: 0.10229599, z: 0.52171093}
+--- !u!114 &2336825272637320995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6836132951756732656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &7046257749674858333
 GameObject:
   m_ObjectHideFlags: 0
@@ -39501,6 +39518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5982388239696359891}
   - component: {fileID: 4954500381348204642}
+  - component: {fileID: 4372215115961678208}
   m_Layer: 6
   m_Name: TankT26
   m_TagString: Untagged
@@ -39545,6 +39563,58 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4372215115961678208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7046257749674858333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 1
+    Name: Move
+  - Type: 1
+    SynchronizeType: 1
+    Name: Turn
+  - Type: 9
+    SynchronizeType: 1
+    Name: Shot
+  - Type: 9
+    SynchronizeType: 1
+    Name: Dead1
+  - Type: 9
+    SynchronizeType: 1
+    Name: Dead2
+  - Type: 9
+    SynchronizeType: 1
+    Name: Dead3
+  - Type: 9
+    SynchronizeType: 1
+    Name: Dead4
+  - Type: 9
+    SynchronizeType: 1
+    Name: Free1
+  - Type: 9
+    SynchronizeType: 1
+    Name: Free2
+  - Type: 9
+    SynchronizeType: 1
+    Name: Free3
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
+  - SynchronizeType: 1
+    LayerIndex: 1
+  - SynchronizeType: 1
+    LayerIndex: 2
 --- !u!1 &7571920313175835839
 GameObject:
   m_ObjectHideFlags: 0
@@ -58527,7 +58597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 92573490032658973, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
       propertyPath: m_Name
-      value: Unit_TankT26 Variant
+      value: Unit_TankT26
       objectReference: {fileID: 0}
     - target: {fileID: 2656082128852805409, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -58593,6 +58663,22 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.075279474
       objectReference: {fileID: 0}
+    - target: {fileID: 3682840077135838750, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682840077135838750, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 4372215115961678208}
+    - target: {fileID: 3682840077135838750, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
+      propertyPath: ObservedComponents.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682840077135838750, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
+      propertyPath: ObservedComponents.Array.data[3]
+      value: 
+      objectReference: {fileID: 2336825272637320995}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

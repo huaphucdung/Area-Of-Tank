@@ -5097,6 +5097,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6397251217980022342}
   - component: {fileID: 6617367416831764532}
+  - component: {fileID: 8538887602162623134}
   m_Layer: 7
   m_Name: BoneTurretTurn
   m_TagString: Untagged
@@ -5142,6 +5143,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.6728094, y: 2.3920195, z: 1.4872061}
   m_Center: {x: 0.011600137, y: 0.046400707, z: 0.591616}
+--- !u!114 &8538887602162623134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997186774470751005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &1084498304409530134
 GameObject:
   m_ObjectHideFlags: 0
@@ -14644,6 +14661,7 @@ GameObject:
   m_Component:
   - component: {fileID: 417904248795184491}
   - component: {fileID: 4763090512458605761}
+  - component: {fileID: 2611264558942131037}
   m_Layer: 6
   m_Name: Tank_KV2
   m_TagString: Untagged
@@ -14688,6 +14706,58 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2611264558942131037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3803772722199586361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 1
+    Name: Move
+  - Type: 1
+    SynchronizeType: 1
+    Name: Turn
+  - Type: 9
+    SynchronizeType: 1
+    Name: Shot
+  - Type: 9
+    SynchronizeType: 1
+    Name: Dead1
+  - Type: 9
+    SynchronizeType: 1
+    Name: Dead2
+  - Type: 9
+    SynchronizeType: 1
+    Name: Dead3
+  - Type: 9
+    SynchronizeType: 1
+    Name: Dead4
+  - Type: 9
+    SynchronizeType: 1
+    Name: Free1
+  - Type: 9
+    SynchronizeType: 1
+    Name: Free2
+  - Type: 9
+    SynchronizeType: 1
+    Name: Free3
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
+  - SynchronizeType: 1
+    LayerIndex: 1
+  - SynchronizeType: 1
+    LayerIndex: 2
 --- !u!1 &4048944671603117378
 GameObject:
   m_ObjectHideFlags: 0
@@ -58592,6 +58662,14 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: -0.009469628
       objectReference: {fileID: 0}
+    - target: {fileID: 3682840077135838750, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682840077135838750, guid: 9cec334e407eb2f44a94727060eef3e3, type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 8538887602162623134}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
