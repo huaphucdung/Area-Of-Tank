@@ -308,7 +308,7 @@ MonoBehaviour:
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
+  m_TeleportIfDistanceGreaterThan: 0.01
 --- !u!1001 &677786673395975077
 PrefabInstance:
   m_ObjectHideFlags: 0

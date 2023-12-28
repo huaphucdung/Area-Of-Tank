@@ -62,11 +62,10 @@ public class MainMenu : MonoBehaviour
         
         currentTank?.Move(InputManager.playerAction.Move.ReadValue<Vector2>());
         currentTank?.TurretRotate(InputManager.playerAction.MousePosition.ReadValue<Vector2>());
-    }
-
-    private void Shoot(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        currentTank?.Shot();
+        if(InputManager.playerAction.Shoot.triggered)
+        {
+            currentTank?.Shot();
+        }
     }
     #endregion
 
@@ -120,7 +119,6 @@ public class MainMenu : MonoBehaviour
     {
         IsTest = true;
         InputManager.EnablePlayerAction();
-        InputManager.playerAction.Shoot.started += Shoot;
         currentTank?.TankDefault();
         targetCamera.gameObject.SetActive(true);
         ui.Hide();
@@ -130,7 +128,6 @@ public class MainMenu : MonoBehaviour
     {
         IsTest = false;
         InputManager.DisablePlayerAction();
-        InputManager.playerAction.Shoot.started -= Shoot;
         currentTank?.StopAudio();
         currentTank?.DefaultTuretRotation();
 

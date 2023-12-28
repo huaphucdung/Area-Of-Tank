@@ -43,6 +43,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (mineTank == null || !mineTank.IsInit) return;
         mineTank?.Move(InputManager.playerAction.Move.ReadValue<Vector2>());
         mineTank?.TurretRotate(InputManager.playerAction.MousePosition.ReadValue<Vector2>());
+        if (InputManager.playerAction.Shoot.triggered)
+        {
+            mineTank?.Shot();
+        }
     }
 
     #endregion

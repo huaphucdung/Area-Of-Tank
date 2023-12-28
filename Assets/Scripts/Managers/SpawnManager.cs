@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,15 +16,15 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private AssetReference boxItem;
     [SerializeField] private Transform boxItemParent;
 
-
     public static Func<Vector3, Quaternion,Shell> GetShellEvent;
     public static Action<Shell> ReleaseShellEvent;
-
 
     public static Action<BoxItem> ReleaseBoxItemEvent;
 
     private ObjectPool<Shell> shellPool;
     private ObjectPool<BoxItem> boxItemPool;
+
+    private GameObject shellPerfab;
 
     private void Awake()
     {
@@ -32,8 +33,27 @@ public class SpawnManager : MonoBehaviour
 
         GetShellEvent += GetShell;
         ReleaseShellEvent += RelaseShell;
-
         ReleaseBoxItemEvent += RelaseBoxItem;
+    }
+
+    private void OnDestroy()
+    {
+        GetShellEvent -= GetShell;
+        ReleaseShellEvent -= RelaseShell;
+        ReleaseBoxItemEvent -= RelaseBoxItem;
+    }
+
+    private void Start()
+    {
+        //Init shell
+        var handle = shell.LoadAssetAsync<GameObject>();
+        handle.WaitForCompletion();
+        shellPerfab = handle.Result;
+
+        DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
+        if (pool.ResourceCache.ContainsKey(shellPerfab.name)) return;
+
+        pool.ResourceCache.Add(shellPerfab.name, shellPerfab);
     }
 
     #region Shell Method
@@ -51,11 +71,16 @@ public class SpawnManager : MonoBehaviour
 
     private Shell CreateShell()
     {
-        var handle = shell.InstantiateAsync();
-        handle.WaitForCompletion();
-        Shell newShell = handle.Result.GetComponent<Shell>();
+        Shell newShell = null;
+        if (PhotonManager.IsInRoom())
+        {
+            newShell = PhotonNetwork.Instantiate(shellPerfab.name,Vector3.zero,Quaternion.identity).GetComponent<Shell>();
+        }
+        else
+        {
+            newShell = Instantiate(shellPerfab).GetComponent<Shell>();
+        }
         newShell.gameObject.SetActive(false);
-
         newShell.transform.parent = bulletParent;
         Debug.Log("Create 1 new shell");
         return newShell;

@@ -105,8 +105,9 @@ public class TankModule : MonoBehaviourPunCallbacks
         Shell tankShell = SpawnManager.GetShellEvent?.Invoke(gunEnd.position, Quaternion.Euler(turret.eulerAngles.x, turret.eulerAngles.y + 180, turret.eulerAngles.z)); /*new Quaternion(-turret.rotation.x, turret.rotation.y, turret.rotation.z, turret.rotation.w));*/
         tankShell.SetData(new ShellData
         {
+            player = PhotonManager.GetLocalPlayer(),
             damage = data.damage,
-            
+
         });
         tankShell.Rb.AddForce(-turret.up.normalized * data.range, ForceMode.Force);
 
