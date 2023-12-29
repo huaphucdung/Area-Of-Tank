@@ -36,8 +36,7 @@ public class TankModule : MonoBehaviourPunCallbacks
     private Animator _animator;
     private BoxCollider[] _boxColliders;
 
-    private TankStruct data;
-    private ReusableData reusableData;
+    public TankStruct data;
     public PhotonView pv;
 
     private bool isInit = false;
@@ -51,17 +50,22 @@ public class TankModule : MonoBehaviourPunCallbacks
         pv = GetComponent<PhotonView>();
     }
 
-    public void Intialize(TankStruct _data, ReusableData _reusableData)
+
+    public void Intialize(TankStruct _data)
     {
         data = _data;
-        reusableData = _reusableData;
         isInit = true;
     }
 
     [PunRPC]
+    public void InitializePhoton()
+    {
+        data = ResourceManager.GetTankData(pv.Owner.CustomProperties["TankType"] as string);
+        isInit = true;
+    }
+ 
     public void SetPosition(Vector3 position)
     {
-        Debug.Log("SDFdsfdsf");
         transform.position = position;
     }
 
@@ -71,8 +75,8 @@ public class TankModule : MonoBehaviourPunCallbacks
         transform.rotation = rotation;
     }
 
-    // Move and rotation tank
-    public void Move(Vector2 moveInput)
+    #region Control Methods
+    public void Move(Vector2 moveInput, ReusableData reusableData)
     {
         Vector3 currentVelicity = _rigidbody.velocity;
         currentVelicity.y = 0;
@@ -97,43 +101,37 @@ public class TankModule : MonoBehaviourPunCallbacks
         }
     }
 
-    public void Shot()
+    public void Shot(ReusableData reusableData)
     {
         if (reusableData.cooldown > Time.time) return;
         Debug.Log("Tank shot");
-
-        Shell tankShell = SpawnManager.GetShellEvent?.Invoke(gunEnd.position, Quaternion.Euler(turret.eulerAngles.x, turret.eulerAngles.y + 180, turret.eulerAngles.z)); /*new Quaternion(-turret.rotation.x, turret.rotation.y, turret.rotation.z, turret.rotation.w));*/
-        tankShell.SetData(new ShellData
-        {
-            player = PhotonManager.GetLocalPlayer(),
-            damage = data.damage,
-
-        });
-        tankShell.Rb.AddForce(-turret.up.normalized * data.range, ForceMode.Force);
-
+        pv.RPC("CreateShell", RpcTarget.All);
         AudioManager.PlayOneShotAudio(audioSource, tankShot);
         _animator.SetTrigger(ShotTrigger);
         smokeBarrel.Play();
         reusableData.cooldown = Time.time + data.cooldown;
     }
 
-    public void PlayEffectLowHealth(bool value)
+    [PunRPC]
+    private void CreateShell()
     {
-        if (value && !smokeLowHealth.isPlaying)
+        Shell tankShell = SpawnManager.GetShellEvent?.Invoke(gunEnd.position, Quaternion.Euler(turret.eulerAngles.x, turret.eulerAngles.y + 180, turret.eulerAngles.z)); /*new Quaternion(-turret.rotation.x, turret.rotation.y, turret.rotation.z, turret.rotation.w));*/
+        tankShell.SetData(new ShellData
         {
-            smokeLowHealth.Play();
-            return;
-        }
-        smokeLowHealth.Stop();
+            player = pv.Owner,
+            damage = data.damage,
+        });
+        tankShell.Rb.AddForce(-turret.up.normalized * data.range, ForceMode.Force);
     }
+    #endregion
 
+    #region SetStateForTank
     public void TankDefault()
     {
         foreach (var box in _boxColliders)
         {
             box.enabled = true;
         }
-        /*_rigidbody.useGravity = true;*/
         AudioManager.PlayAudio(audioSource, tankIdle);
         _animator.CrossFade(Idling, 0f);
     }
@@ -145,7 +143,6 @@ public class TankModule : MonoBehaviourPunCallbacks
         {
             box.enabled = false;
         }
-        /*_rigidbody.useGravity = false;*/
         AudioManager.StopPlayAudio(audioSource);
         AudioManager.PlayOneShotAudio(audioSource, tankDead);
         smokeExplosion.Play();
@@ -156,6 +153,17 @@ public class TankModule : MonoBehaviourPunCallbacks
     public void TankFree()
     {
         _animator.SetTrigger(FreeTrigger[Random.Range(0, FreeTrigger.Count)]);
+    }
+    #endregion
+
+    public void PlayEffectLowHealth(bool value)
+    {
+        if (value && !smokeLowHealth.isPlaying)
+        {
+            smokeLowHealth.Play();
+            return;
+        }
+        smokeLowHealth.Stop();
     }
 
     public void DefaultTuretRotation()

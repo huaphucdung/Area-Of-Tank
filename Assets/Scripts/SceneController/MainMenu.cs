@@ -60,11 +60,11 @@ public class MainMenu : MonoBehaviour
     {
         if (!IsTest) return;
         
-        currentTank?.Move(InputManager.playerAction.Move.ReadValue<Vector2>());
+        currentTank?.Move(InputManager.playerAction.Move.ReadValue<Vector2>(), reusableData);
         currentTank?.TurretRotate(InputManager.playerAction.MousePosition.ReadValue<Vector2>());
         if(InputManager.playerAction.Shoot.triggered)
         {
-            currentTank?.Shot();
+            currentTank?.Shot(reusableData);
         }
     }
     #endregion
@@ -76,7 +76,7 @@ public class MainMenu : MonoBehaviour
         foreach (string tankType in TankReferenceSO.GetListTankType())
         {
             TankModule newTank = TankReferenceSO.InstanceTank(tankType, tankTransform.position, tankTransform.rotation).GetComponent<TankModule>();
-            newTank.Intialize(ResourceManager.GetTankData(tankType), reusableData);
+            newTank.Intialize(ResourceManager.GetTankData(tankType));
             newTank.gameObject.SetActive(false);
             tankList.Add(newTank);
         }

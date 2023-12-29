@@ -17,7 +17,7 @@ public class Shell : MonoBehaviourPunCallbacks
     private Rigidbody _rigidbody;
     private PhotonView _view;
     public Rigidbody Rb => _rigidbody;
-    public PhotonView PV => _view;
+    public Player player;
     #region Unity
     private void Awake()
     {
@@ -25,7 +25,6 @@ public class Shell : MonoBehaviourPunCallbacks
         _source = GetComponent<AudioSource>();
         _render = GetComponent<MeshRenderer>();
         _sphereCollider = GetComponent<SphereCollider>();
-        _view = GetComponent<PhotonView>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -37,9 +36,12 @@ public class Shell : MonoBehaviourPunCallbacks
         AudioManager.PlayOneShotAudio(_source, sound);
         ResetVelocity();
         Invoke("ReturnToPool", 0.5f);
-        /*ITakeDamage takeDamage = collision.gameObject.GetComponent<ITakeDamage>();
+
+        if (!PhotonManager.IsHost()) return;
+
+        TakeDamageModule takeDamage = collision.gameObject.GetComponent<TakeDamageModule>();
         if (takeDamage == null) return;
-        takeDamage.Attack(damage);*/
+        takeDamage.view.RPC("Attack", RpcTarget.All, player, damage);
     }
 
     private void OnEnable()
@@ -54,10 +56,8 @@ public class Shell : MonoBehaviourPunCallbacks
     {
         if (data == null || !(data is ShellData)) return;
 
+        player = ((ShellData)data).player;
         damage = Mathf.FloorToInt(((ShellData)data).damage * (((ShellData)data).isBuffDame? 1 : 1.5f));
-
-        if (!PhotonManager.IsInRoom()) return;
-        PV.TransferOwnership(((ShellData)data).player);
     }
 
     public void SetTransfrom(Vector3 position, Quaternion rotation)

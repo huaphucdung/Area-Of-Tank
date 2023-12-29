@@ -50,6 +50,12 @@ MonoBehaviour:
   - SetPosition
   - FinishLoaded
   - OnFinishLoaded
+  - Intialize
+  - InitializePhoton
+  - CreateShell
+  - StartGame
+  - Attack
+  - OnFinishSpawnTank
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

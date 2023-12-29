@@ -28,10 +28,10 @@ public class Map : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        ITakeDamage takeDame = other.GetComponent<ITakeDamage>();
+        /*ITakeDamage takeDame = other.GetComponent<ITakeDamage>();
         if (takeDame != null)
         {
             takeDame.Attack(0, true);
-        }
+        }*/
     }
 }

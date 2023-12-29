@@ -1,27 +1,28 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TakeDamageModule : MonoBehaviour, ITakeDamage
+public class TakeDamageModule : MonoBehaviour
 {
-    private ICharacter character;
-    public Func<int, bool, bool> TakeDameEvent;
+    public Func<int, bool> TakeDameEvent;
 
-    public void Initialize(IData data)
+    public PhotonView view;
+
+    private void Start()
     {
-        if (data == null || !(data is TakeDameData)) return;
-        character = ((TakeDameData)data).character;
+        view = GetComponent<PhotonView>();
     }
-
-    public bool Attack(int value, bool kill)
+    [PunRPC]
+    public void Attack(Player player ,int value)
     {
-        return TakeDameEvent.Invoke(value, kill);
+        if (TakeDameEvent == null) return;
+        if(TakeDameEvent.Invoke(value))
+        {
+            /*Debug.Log(kill);*/
+        }
     }
 }
 
-
-public class TakeDameData : IData
-{
-    public ICharacter character;
-}

@@ -49,11 +49,6 @@ public class SpawnManager : MonoBehaviour
         var handle = shell.LoadAssetAsync<GameObject>();
         handle.WaitForCompletion();
         shellPerfab = handle.Result;
-
-        DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
-        if (pool.ResourceCache.ContainsKey(shellPerfab.name)) return;
-
-        pool.ResourceCache.Add(shellPerfab.name, shellPerfab);
     }
 
     #region Shell Method
@@ -71,15 +66,7 @@ public class SpawnManager : MonoBehaviour
 
     private Shell CreateShell()
     {
-        Shell newShell = null;
-        if (PhotonManager.IsInRoom())
-        {
-            newShell = PhotonNetwork.Instantiate(shellPerfab.name,Vector3.zero,Quaternion.identity).GetComponent<Shell>();
-        }
-        else
-        {
-            newShell = Instantiate(shellPerfab).GetComponent<Shell>();
-        }
+        Shell newShell = Instantiate(shellPerfab).GetComponent<Shell>();
         newShell.gameObject.SetActive(false);
         newShell.transform.parent = bulletParent;
         Debug.Log("Create 1 new shell");
