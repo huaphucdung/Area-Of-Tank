@@ -1,5 +1,6 @@
 using MEC;
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +42,9 @@ public class TankModule : MonoBehaviourPunCallbacks
 
     private bool isInit = false;
     public bool IsInit => isInit;
+
+    public event Action tankDefaultTrigger;
+    public event Action tankDeadTrigger; 
 
     private void Awake()
     {
@@ -126,6 +130,7 @@ public class TankModule : MonoBehaviourPunCallbacks
     #endregion
 
     #region SetStateForTank
+    [PunRPC]
     public void TankDefault()
     {
         foreach (var box in _boxColliders)
@@ -134,8 +139,11 @@ public class TankModule : MonoBehaviourPunCallbacks
         }
         AudioManager.PlayAudio(audioSource, tankIdle);
         _animator.CrossFade(Idling, 0f);
+
+        tankDefaultTrigger?.Invoke();
     }
 
+    [PunRPC]
     public void TankDead()
     {
         _rigidbody.velocity = Vector3.zero;
@@ -146,13 +154,14 @@ public class TankModule : MonoBehaviourPunCallbacks
         AudioManager.StopPlayAudio(audioSource);
         AudioManager.PlayOneShotAudio(audioSource, tankDead);
         smokeExplosion.Play();
+        _animator.SetTrigger(DeadTrigger[UnityEngine.Random.Range(0, DeadTrigger.Count)]);
 
-        _animator.SetTrigger(DeadTrigger[Random.Range(0, DeadTrigger.Count)]);
+        tankDeadTrigger?.Invoke();
     }
 
     public void TankFree()
     {
-        _animator.SetTrigger(FreeTrigger[Random.Range(0, FreeTrigger.Count)]);
+        _animator.SetTrigger(FreeTrigger[UnityEngine.Random.Range(0, FreeTrigger.Count)]);
     }
     #endregion
 

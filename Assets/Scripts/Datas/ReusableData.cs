@@ -26,7 +26,6 @@ public class ReusableData
     public void SetDefault(TankStruct data)
     {
         state = PlayerState.Life;
-
         maxHealth = currentHealth = data.health;
     }
 

@@ -21,7 +21,10 @@ public class TakeDamageModule : MonoBehaviour
         if (TakeDameEvent == null) return;
         if(TakeDameEvent.Invoke(value))
         {
-            /*Debug.Log(kill);*/
+            //Set dead for tank
+            view.RPC("TankDead", RpcTarget.All);
+            //Send who kill who dead
+            GameManager.SendScore(player, view.Owner);
         }
     }
 }
