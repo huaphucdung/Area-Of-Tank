@@ -93,6 +93,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6e271e37f50d941b69072185376711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  mesh: {fileID: 0}
+  view: {fileID: 0}
 --- !u!82 &8316177598979162068
 AudioSource:
   m_ObjectHideFlags: 0

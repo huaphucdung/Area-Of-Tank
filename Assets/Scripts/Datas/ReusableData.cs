@@ -17,10 +17,15 @@ public class ReusableData
     public int maxHealth;
     public int currentHealth;
     public PlayerState state;
+
+    public bool isShield;
+    public bool isBuffDamage;
     public void Initialize()
     {
         currentEngine = 0;
         cooldown = Time.time;
+        isShield = false;
+        isBuffDamage = false;
     }
 
     public void SetDefault(TankStruct data)
@@ -37,12 +42,25 @@ public class ReusableData
 
     public bool ChangeHealth(int value)
     {
+        if (isShield) return false;
         currentHealth -= value;
-        if (currentHealth <=0)
+        return true;
+    }
+
+    public bool IsDead()
+    {
+        if (state == PlayerState.Dead) return true;
+        
+        if(currentHealth <= 0)
         {
             SetDead();
             return true;
         }
         return false;
+    }
+
+    public float GetPercentHealth()
+    {
+        return (float)currentHealth / maxHealth;
     }
 }

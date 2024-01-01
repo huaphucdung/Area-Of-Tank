@@ -23,9 +23,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     private Map map;
     public ReusableData reusableData;
     private TankModule mineTank;
+    private TakeDamageModule mineTakeDamage; 
     private Dictionary<Player, PlayerScore> playerScores;
 
-    private bool isDead;
     private const byte StartGameEventCode = 0;
     private const byte EndGameEventCode = 1;
     private const byte SendScoreEventCode = 2;
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
-        if (mineTank == null || !mineTank.IsInit || isDead) return;
+        if (mineTank == null || !mineTank.IsInit || reusableData.IsDead()) return;
 
         mineTank?.Move(InputManager.playerAction.Move.ReadValue<Vector2>(), reusableData);
         mineTank?.TurretRotate(InputManager.playerAction.MousePosition.ReadValue<Vector2>());
@@ -91,7 +91,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         GameObject tankLocal = TankReferenceSO.PhotonInstantiateTank(PhotonManager.GetLocalPlayer().CustomProperties["TankType"] as string,
             map.GetSpawnPositionByIndex(PhotonManager.GetPlayerIndex()), Quaternion.identity);
+        
         mineTank = tankLocal.GetComponent<TankModule>();
+        mineTakeDamage = tankLocal.GetComponent<TakeDamageModule>();
+
         mineTank.pv.RPC("InitializePhoton", RpcTarget.AllBuffered);
         SetTargetCamera(mineTank.transform);
 
@@ -173,7 +176,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         numberTank++;
         if (numberTank != PhotonManager.GetNumberPlayerInRoom()) return;
         
-        /*pv.RPC("StartGame", RpcTarget.All);*/
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(StartGameEventCode, null, raiseEventOptions, SendOptions.SendReliable);
     }
@@ -181,20 +183,31 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void OnTankDefault()
     {
         if (mineTank == null) return;
-        isDead = false;
         reusableData.SetDefault(mineTank.data);
-        mineTank.GetComponent<TakeDamageModule>().TakeDameEvent += reusableData.ChangeHealth;
+        mineTakeDamage.TakeDameEvent += OnTankHealthChange;
     }
 
     private void OnTankDead()
     {
         if (mineTank == null) return;
-        isDead = true;
         reusableData.SetDead();
-        mineTank.GetComponent<TakeDamageModule>().TakeDameEvent -= reusableData.ChangeHealth;
+        mineTakeDamage.TakeDameEvent -= OnTankHealthChange;
 
         //Check codition before respawn
         Timing.RunCoroutine(RespawnTank());
+    }
+
+    private void OnTankHealthChange(Player playerKill, Player playerDead, int value)
+    {
+        if(reusableData.ChangeHealth(value)) mineTank.pv.RPC("ShowTakeDamageEffect", RpcTarget.All);
+        
+        //Send current health for all player
+
+        if (reusableData.IsDead())
+        {
+            mineTank.pv.RPC("TankDead", RpcTarget.All);
+            SendScore(playerKill, playerDead);   
+        }
     }
 
     private void OnEvent(EventData photonEvent)
