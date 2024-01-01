@@ -5,7 +5,7 @@ using MEC;
 
 public class BaseEffect : MonoBehaviour, IEffect
 {
-    [SerializeField] private EffectType type;
+    [SerializeField] public EffectType type;
     [SerializeField] private float duration = 3f;
     [SerializeField] protected ParticleSystem effect;
     public virtual void StartEffect(IData data)

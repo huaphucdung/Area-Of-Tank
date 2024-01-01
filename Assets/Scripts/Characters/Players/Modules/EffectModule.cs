@@ -13,22 +13,24 @@ public class EffectModule : MonoBehaviour, ITakeEffect
 {
     [SerializeField] private List<BaseEffect> effects;
 
+    private Dictionary<EffectType, BaseEffect> effectDictionary;
     private IData data;
 
     public void Initialize(IData data)
     {
         this.data = data;
+        effectDictionary = new Dictionary<EffectType, BaseEffect>();
+        foreach (BaseEffect effect in effects)
+        {
+            effectDictionary[effect.type] = effect;
+        }
     }
 
     public void DoEffect(EffectType type)
     {
-        foreach(BaseEffect effect in effects)
+        if (effectDictionary.ContainsKey(type))
         {
-            if(effect.GetEffectType() == type)
-            {
-                effect.StartEffect(data);
-                break;
-            }
+            /*effectDictionary[type].StartEffect();*/
         }
     }
 }
