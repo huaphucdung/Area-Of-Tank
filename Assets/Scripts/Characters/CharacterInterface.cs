@@ -8,3 +8,8 @@ public interface ITakeEffect
 {
     void DoEffect(EffectType type);
 }
+
+public class EffectData : IData
+{
+    public ReusableData data;
+}

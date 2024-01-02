@@ -19,12 +19,14 @@ public class SpawnManager : MonoBehaviour
     public static Func<Vector3, Quaternion,Shell> GetShellEvent;
     public static Action<Shell> ReleaseShellEvent;
 
+    public static Func<Vector3, BoxItem> GetBoxItemEvent;
     public static Action<BoxItem> ReleaseBoxItemEvent;
 
     private ObjectPool<Shell> shellPool;
     private ObjectPool<BoxItem> boxItemPool;
 
-    private GameObject shellPerfab;
+    private GameObject shellPrefab;
+    private GameObject boxItemPrefab;
 
     private void Awake()
     {
@@ -33,6 +35,8 @@ public class SpawnManager : MonoBehaviour
 
         GetShellEvent += GetShell;
         ReleaseShellEvent += RelaseShell;
+
+        GetBoxItemEvent += GetBoxItem;
         ReleaseBoxItemEvent += RelaseBoxItem;
     }
 
@@ -40,15 +44,19 @@ public class SpawnManager : MonoBehaviour
     {
         GetShellEvent -= GetShell;
         ReleaseShellEvent -= RelaseShell;
+        GetBoxItemEvent -= GetBoxItem;
         ReleaseBoxItemEvent -= RelaseBoxItem;
     }
 
     private void Start()
     {
-        //Init shell
-        var handle = shell.LoadAssetAsync<GameObject>();
-        handle.WaitForCompletion();
-        shellPerfab = handle.Result;
+        //Load and get prefab shell and boxItem;
+        var handleShell = shell.LoadAssetAsync<GameObject>();
+        var handleBoxItem = boxItem.LoadAssetAsync<GameObject>();
+        handleShell.WaitForCompletion();
+        shellPrefab = handleShell.Result;
+        handleBoxItem.WaitForCompletion();
+        boxItemPrefab = handleBoxItem.Result;
     }
 
     #region Shell Method
@@ -66,10 +74,9 @@ public class SpawnManager : MonoBehaviour
 
     private Shell CreateShell()
     {
-        Shell newShell = Instantiate(shellPerfab).GetComponent<Shell>();
+        Shell newShell = Instantiate(shellPrefab).GetComponent<Shell>();
         newShell.gameObject.SetActive(false);
         newShell.transform.parent = bulletParent;
-        Debug.Log("Create 1 new shell");
         return newShell;
     }
 
@@ -92,9 +99,10 @@ public class SpawnManager : MonoBehaviour
     #endregion
 
     #region BoxItem Method
-    private BoxItem GetBoxItem()
+    private BoxItem GetBoxItem(Vector3 position)
     {
         BoxItem boxItem = boxItemPool.Get();
+        boxItem.transform.position = position;
         return boxItem;
     }
     private void RelaseBoxItem(BoxItem box)
@@ -103,13 +111,9 @@ public class SpawnManager : MonoBehaviour
     }
     private BoxItem CreateBox()
     {
-        var handle = boxItem.InstantiateAsync();
-        handle.WaitForCompletion();
-        BoxItem newBox = handle.Result.GetComponent<BoxItem>();
+        BoxItem newBox = Instantiate(boxItemPrefab).GetComponent<BoxItem>();
         newBox.gameObject.SetActive(false);
-
         newBox.transform.parent = boxItemParent;
-        Debug.Log("Create 1 new BoxItem");
         return newBox;
     }
 

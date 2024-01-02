@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,11 +15,13 @@ public class EffectModule : MonoBehaviour, ITakeEffect
     [SerializeField] private List<BaseEffect> effects;
 
     private Dictionary<EffectType, BaseEffect> effectDictionary;
+    public PhotonView pv;
     private IData data;
 
-    public void Initialize(IData data)
+    private void Start()
     {
-        this.data = data;
+        pv = GetComponent<PhotonView>();
+
         effectDictionary = new Dictionary<EffectType, BaseEffect>();
         foreach (BaseEffect effect in effects)
         {
@@ -26,11 +29,12 @@ public class EffectModule : MonoBehaviour, ITakeEffect
         }
     }
 
+    [PunRPC]
     public void DoEffect(EffectType type)
     {
         if (effectDictionary.ContainsKey(type))
         {
-            /*effectDictionary[type].StartEffect();*/
+            /*effectDictionary[type].StartEffect(data);*/
         }
     }
 }

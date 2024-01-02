@@ -14,34 +14,58 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     [Header("CameraSettings:")]
     [SerializeField] private CinemachineVirtualCamera cameraCV;
-    [SerializeField] private float timeRespawn = 3f;
+    
+    [Header("Settings:")]
+    [SerializeField] private float timeRespawnTank = 3f;
+    [SerializeField] private float timeRespawnBoxItem = 10f;
+
     public static Action<Transform> setCameraTargetEvent;
     private int numberPlayerLoaded;
     private int numberTank;
 
-    public static PhotonView pv;
     private Map map;
     public ReusableData reusableData;
     private TankModule mineTank;
-    private TakeDamageModule mineTakeDamage; 
-    private Dictionary<Player, PlayerScore> playerScores;
+    private TakeDamageModule mineTakeDamage;
+    private EffectModule effectModule;
 
-    private const byte StartGameEventCode = 0;
-    private const byte EndGameEventCode = 1;
-    private const byte SendScoreEventCode = 2;
+    private Dictionary<Player, PlayerScore> playerScores;
+    private Dictionary<int, BoxItem> boxItemDictionary;
+
+
+    private const byte LocalPlayerLoadedEventCode = 10;
+    private const byte SpawnTankEventCode = 12;
+    private const byte StartGameEventCode = 40;
+
+    private const byte HideBoxItemEventCode = 42;
+    private const byte ShowBoxItemEventCode = 43;
+
+    private const byte EndGameEventCode = 50;
+    private const byte SendScoreEventCode = 45;
 
     #region Unity
     private void Awake()
     {
         Initiazlie();
-        InstanceMap();
-        numberTank = numberPlayerLoaded = 0;
+        
     }
 
     private void Start()
     {
-        pv = GetComponent<PhotonView>();
-        pv.RPC("OnFinishLoaded", RpcTarget.AllBuffered);
+        numberTank = numberPlayerLoaded = 0;
+        reusableData.Initialize();
+        //Load Map and Mode game play
+        InstanceMap();
+        //Set Score        
+        playerScores.Clear();
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            playerScores[player] = new PlayerScore();
+        }
+
+        //Send Noitice to Host
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient};
+        PhotonNetwork.RaiseEvent(LocalPlayerLoadedEventCode, null, raiseEventOptions, SendOptions.SendReliable);
     }
 
     private void FixedUpdate()
@@ -71,7 +95,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         reusableData = new ReusableData();
         playerScores = new Dictionary<Player, PlayerScore>();
-        reusableData.Initialize();
+        boxItemDictionary = new Dictionary<int, BoxItem>();
 
         setCameraTargetEvent += SetTargetCamera;
     }
@@ -86,7 +110,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         map = MapReferenceSO.InstanceMap(PhotonManager.GetCurrentRoom().CustomProperties["map"] as string);
     }
 
-    [PunRPC]
     private void SpawnLocalPlayer()
     {
         GameObject tankLocal = TankReferenceSO.PhotonInstantiateTank(PhotonManager.GetLocalPlayer().CustomProperties["TankType"] as string,
@@ -94,14 +117,15 @@ public class GameManager : MonoBehaviourPunCallbacks
         
         mineTank = tankLocal.GetComponent<TankModule>();
         mineTakeDamage = tankLocal.GetComponent<TakeDamageModule>();
+        effectModule = tankLocal.GetComponent<EffectModule>();
 
-        mineTank.pv.RPC("InitializePhoton", RpcTarget.AllBuffered);
+        mineTank.pv.RPC("InitializePhoton", RpcTarget.All);
+        /*effectModule.pv.RPC("Initialize", RpcTarget.All, new EffectData { data = reusableData });*/
+
         SetTargetCamera(mineTank.transform);
 
         mineTank.tankDefaultTrigger += OnTankDefault;
         mineTank.tankDeadTrigger += OnTankDead;
-
-        pv.RPC("OnFinishSpawnTank", RpcTarget.MasterClient);
     }
 
     private void SetTargetCamera(Transform transform = null)
@@ -115,9 +139,21 @@ public class GameManager : MonoBehaviourPunCallbacks
     #region Start Game Method
     private void StartGame()
     {
+        int id = 0;
         Debug.Log("StartGame");
-        //Set tank dafault
+        //Spawn Tank at local
+        SpawnLocalPlayer();
         mineTank?.pv.RPC("TankDefault", RpcTarget.All);
+        //Spawn All boxItem
+        foreach (Transform boxItemPosition in map.GetBoxPositions)
+        {
+            BoxItem newBox = SpawnManager.GetBoxItemEvent.Invoke(boxItemPosition.position);
+            newBox.disableAction += SetRespawnBoxItem;
+            newBox.SetID(id);
+            boxItemDictionary[id] = newBox;
+            id++;
+        }
+      
     }
     #endregion
 
@@ -154,30 +190,24 @@ public class GameManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region Callback Methods
-    [PunRPC]
     private void OnFinishLoaded()
     {
-        playerScores.Clear();
-        foreach(Player player in PhotonNetwork.PlayerList)
-        {
-            playerScores[player] = new PlayerScore();
-        }
-
-        if (!PhotonManager.IsHost()) return;
+        //Check all player finish loaded tell they start game
         numberPlayerLoaded++;
         if (numberPlayerLoaded != PhotonManager.GetNumberPlayerInRoom()) return;
-        pv.RPC("SpawnLocalPlayer", RpcTarget.All);    
+        
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All};
+        PhotonNetwork.RaiseEvent(StartGameEventCode, null, raiseEventOptions, SendOptions.SendReliable);
     }
 
-    [PunRPC]
     private void OnFinishSpawnTank()
     {
         if (!PhotonManager.IsHost()) return;
         numberTank++;
         if (numberTank != PhotonManager.GetNumberPlayerInRoom()) return;
         
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(StartGameEventCode, null, raiseEventOptions, SendOptions.SendReliable);
+        /*RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(StartGameEventCode, null, raiseEventOptions, SendOptions.SendReliable);*/
     }
 
     private void OnTankDefault()
@@ -213,26 +243,66 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
+
         switch(eventCode)
         {
+            case LocalPlayerLoadedEventCode:
+                OnFinishLoaded();
+                break;
+            case SpawnTankEventCode:
+                break;
             case StartGameEventCode:
                 StartGame();
                 break;
             case EndGameEventCode:
                 break;
             case SendScoreEventCode:
-                object[] data = (object[])photonEvent.CustomData;
-                UpdateScore((Player)data[0], (Player)data[1]);
+                object[] scoreData = (object[])photonEvent.CustomData;
+                UpdateScore((Player)scoreData[0], (Player)scoreData[1]);
+                break;
+            case HideBoxItemEventCode:
+                object[] hideBoxData = (object[])photonEvent.CustomData;
+                if (boxItemDictionary.ContainsKey((int)hideBoxData[0]))
+                {
+                    boxItemDictionary[(int)hideBoxData[0]].gameObject.SetActive(false);
+                }
+                break;
+            case ShowBoxItemEventCode:
+                object[] showBoxData = (object[])photonEvent.CustomData;
+                if (boxItemDictionary.ContainsKey((int)showBoxData[0]))
+                {
+                    boxItemDictionary[(int)showBoxData[0]].gameObject.SetActive(true);
+                }
                 break;
         }
     }
     #endregion
 
+    private void SetRespawnBoxItem(BoxItem box)
+    {
+        //Send All turn off boxItem
+        object[] content = new object[1];
+        content[0] = box.id;
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(HideBoxItemEventCode, content, raiseEventOptions, SendOptions.SendReliable);
+        
+        Timing.RunCoroutine(RespawnBoxItem(box.id));
+    }
+
     IEnumerator<float> RespawnTank()
     {
-        yield return Timing.WaitForSeconds(timeRespawn);
+        yield return Timing.WaitForSeconds(timeRespawnTank);
         mineTank?.SetPosition(map.GetSpawnPosition());
         mineTank?.pv.RPC("TankDefault", RpcTarget.All);
+    }
+
+    IEnumerator<float> RespawnBoxItem(int boxItemId)
+    {
+        yield return Timing.WaitForSeconds(timeRespawnBoxItem);
+        object[] content = new object[1];
+        content[0] = boxItemId;
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(ShowBoxItemEventCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
 }
 

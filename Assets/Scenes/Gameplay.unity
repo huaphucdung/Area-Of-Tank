@@ -132,7 +132,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 355692697}
-  - component: {fileID: 355692699}
   - component: {fileID: 355692696}
   - component: {fileID: 355692698}
   m_Layer: 0
@@ -155,11 +154,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraCV: {fileID: 2020220307}
-  playerPrefabs:
-    m_AssetGUID: 8c28f9d014ff0b04eb3bcc175445837b
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  timeRespawnTank: 3
+  timeRespawnItem: 10
+  reusableData:
+    currentEngine: 0
+    cooldown: 0
+    maxHealth: 0
+    currentHealth: 0
+    state: 0
+    isShield: 0
+    isBuffDamage: 0
 --- !u!4 &355692697
 Transform:
   m_ObjectHideFlags: 0
@@ -201,28 +205,6 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   boxItemParent: {fileID: 1964637920}
---- !u!114 &355692699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355692695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 1
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &543598705
 GameObject:
   m_ObjectHideFlags: 0

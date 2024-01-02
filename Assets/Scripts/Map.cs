@@ -9,6 +9,8 @@ public class Map : MonoBehaviour
     [SerializeField] private LayerMask layerCheck;
     [SerializeField] [Range(0, 10f)] private float rangeCheck = 5f;
 
+    public List<Transform> GetBoxPositions => itemSpawnPosition;
+
     public Vector3 GetSpawnPositionByIndex(int index)
     {
         return playerSpawnPosition[index].position;
