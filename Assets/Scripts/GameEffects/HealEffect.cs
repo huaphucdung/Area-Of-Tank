@@ -5,13 +5,9 @@ using UnityEngine;
 public class HealEffect : BaseEffect
 {
     [SerializeField] private int value;
-    public override void StartEffect(IData data)
+    public override void StartEffect()
     {
-        /*data.SetTakeHeal(value);*/
+        if (module.getDataFunc != null) module.getDataFunc.Invoke().AddHealth(value);
         effect.Play();
-    }
-
-    public override void EndEffect(IData data)
-    {
     }
 }

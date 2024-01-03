@@ -40,7 +40,14 @@ public class ReusableData
         currentHealth = 0;
     }
 
-    public bool ChangeHealth(int value)
+    public bool AddHealth(int value)
+    {
+        currentHealth += value;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+        return true;
+    }
+
+    public bool SubHealth(int value)
     {
         if (isShield) return false;
         currentHealth -= value;

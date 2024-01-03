@@ -16,9 +16,14 @@ public class BoxItem : MonoBehaviour
 
     private void Start()
     {
+        SetRandomEffect();
+    }
+
+    private void SetRandomEffect()
+    {
         if (!IsRandomEffect) return;
         int index = Random.Range(0, Enum.GetValues(typeof(EffectType)).Length);
-        type = (EffectType) Enum.GetValues(typeof(EffectType)).GetValue(index);
+        type = (EffectType)Enum.GetValues(typeof(EffectType)).GetValue(index);
     }
 
     public void SetID(int id)
@@ -28,6 +33,7 @@ public class BoxItem : MonoBehaviour
 
     private void OnEnable()
     {
+        SetRandomEffect();
         transform.DORotate(new Vector3(0f, 360f, 0f), 1f, RotateMode.WorldAxisAdd)
             .SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
     }

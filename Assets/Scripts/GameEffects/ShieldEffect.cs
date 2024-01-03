@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class ShieldEffect : BaseEffect
 {
-    public override void StartEffect(IData data)
+    public override void StartEffect()
     {
-       /* data.reusableData.IsShield = true;*/
-        effect.Play();
-        base.StartEffect(data);
+        if (module.getDataFunc !=  null) module.getDataFunc.Invoke().isShield = true;
+        base.StartEffect();
     }
 
-    public override void EndEffect(IData data)
+    public override void EndEffect()
     {
-        base.EndEffect(data);
-        /*data.reusableData.IsShield = false;*/
-        effect.Stop();
+        if (module.getDataFunc != null) module.getDataFunc.Invoke().isShield = false;
+        base.EndEffect();
     }
 }

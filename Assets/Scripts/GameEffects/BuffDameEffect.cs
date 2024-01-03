@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class BuffDameEffect : BaseEffect
 {
-    public override void StartEffect(IData data)
+    public override void StartEffect()
     {
-        /*data.reusableData.IsBuffDame = true;*/
-        effect.Play();
-        base.StartEffect(data);
+        if (module.getDataFunc != null) module.getDataFunc.Invoke().isBuffDamage = true;
+        base.StartEffect();
     }
 
-    public override void EndEffect(IData data)
+    public override void EndEffect()
     {
-        /*data.reusableData.IsBuffDame = false;*/
-        effect.Stop();
+        if (module.getDataFunc != null) module.getDataFunc.Invoke().isBuffDamage = false;
+        base.EndEffect();
     }
 }

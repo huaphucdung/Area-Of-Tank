@@ -120,12 +120,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         effectModule = tankLocal.GetComponent<EffectModule>();
 
         mineTank.pv.RPC("InitializePhoton", RpcTarget.All);
-        /*effectModule.pv.RPC("Initialize", RpcTarget.All, new EffectData { data = reusableData });*/
-
+        
         SetTargetCamera(mineTank.transform);
 
         mineTank.tankDefaultTrigger += OnTankDefault;
         mineTank.tankDeadTrigger += OnTankDead;
+        effectModule.getDataFunc += GetReusableData;
     }
 
     private void SetTargetCamera(Transform transform = null)
@@ -229,15 +229,19 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void OnTankHealthChange(Player playerKill, Player playerDead, int value)
     {
-        if(reusableData.ChangeHealth(value)) mineTank.pv.RPC("ShowTakeDamageEffect", RpcTarget.All);
+        if(reusableData.SubHealth(value)) mineTank.pv.RPC("ShowTakeDamageEffect", RpcTarget.All);
         
         //Send current health for all player
-
         if (reusableData.IsDead())
         {
             mineTank.pv.RPC("TankDead", RpcTarget.All);
             SendScore(playerKill, playerDead);   
         }
+    }
+
+    private ReusableData GetReusableData()
+    {
+        return reusableData;
     }
 
     private void OnEvent(EventData photonEvent)

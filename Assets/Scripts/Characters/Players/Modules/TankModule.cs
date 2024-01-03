@@ -44,7 +44,7 @@ public class TankModule : MonoBehaviourPunCallbacks
     public bool IsInit => isInit;
 
     public event Action tankDefaultTrigger;
-    public event Action tankDeadTrigger; 
+    public event Action tankDeadTrigger;
 
     private void Awake()
     {
@@ -67,7 +67,7 @@ public class TankModule : MonoBehaviourPunCallbacks
         data = ResourceManager.GetTankData(pv.Owner.CustomProperties["TankType"] as string);
         isInit = true;
     }
- 
+
     public void SetPosition(Vector3 position)
     {
         transform.position = position;
@@ -109,7 +109,18 @@ public class TankModule : MonoBehaviourPunCallbacks
     {
         if (reusableData.cooldown > Time.time) return;
         Debug.Log("Tank shot");
-        pv.RPC("CreateShell", RpcTarget.All);
+        pv.RPC("CreateShell", RpcTarget.All, reusableData.isBuffDamage);
+        AudioManager.PlayOneShotAudio(audioSource, tankShot);
+        _animator.SetTrigger(ShotTrigger);
+        smokeBarrel.Play();
+        reusableData.cooldown = Time.time + data.cooldown;
+    }
+
+    public void ShotTest(ReusableData reusableData)
+    {
+        if (reusableData.cooldown > Time.time) return;
+        Debug.Log("Tank shot");
+        CreateShell(reusableData.isBuffDamage);
         AudioManager.PlayOneShotAudio(audioSource, tankShot);
         _animator.SetTrigger(ShotTrigger);
         smokeBarrel.Play();
@@ -117,13 +128,13 @@ public class TankModule : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void CreateShell()
+    private void CreateShell(bool isBuffDamage)
     {
         Shell tankShell = SpawnManager.GetShellEvent?.Invoke(gunEnd.position, Quaternion.Euler(turret.eulerAngles.x, turret.eulerAngles.y + 180, turret.eulerAngles.z)); /*new Quaternion(-turret.rotation.x, turret.rotation.y, turret.rotation.z, turret.rotation.w));*/
         tankShell.SetData(new ShellData
         {
             player = pv.Owner,
-            damage = data.damage,
+            damage = data.damage * ((isBuffDamage) ? 2 : 1),
         });
         tankShell.Rb.AddForce(-turret.up.normalized * data.range, ForceMode.Force);
     }
@@ -177,7 +188,7 @@ public class TankModule : MonoBehaviourPunCallbacks
 
     public void DefaultTuretRotation()
     {
-        turret.rotation = Quaternion.Euler(-90, transform.eulerAngles.y ,0);
+        turret.rotation = Quaternion.Euler(-90, transform.eulerAngles.y, 0);
     }
 
     public void StopAudio()
@@ -185,4 +196,4 @@ public class TankModule : MonoBehaviourPunCallbacks
         AudioManager.StopPlayAudio(audioSource);
     }
 }
- 
+

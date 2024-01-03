@@ -64,7 +64,7 @@ public class MainMenu : MonoBehaviour
         currentTank?.TurretRotate(InputManager.playerAction.MousePosition.ReadValue<Vector2>());
         if(InputManager.playerAction.Shoot.triggered)
         {
-            currentTank?.Shot(reusableData);
+            currentTank?.ShotTest(reusableData);
         }
     }
     #endregion

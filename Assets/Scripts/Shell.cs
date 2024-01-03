@@ -57,7 +57,8 @@ public class Shell : MonoBehaviourPunCallbacks
         if (data == null || !(data is ShellData)) return;
 
         player = ((ShellData)data).player;
-        damage = Mathf.FloorToInt(((ShellData)data).damage * (((ShellData)data).isBuffDame? 1 : 1.5f));
+
+        damage = ((ShellData)data).damage;
     }
 
     public void SetTransfrom(Vector3 position, Quaternion rotation)
@@ -81,5 +82,4 @@ public class ShellData : IData
 {
     public Player player;
     public int damage;
-    public bool isBuffDame;
 }

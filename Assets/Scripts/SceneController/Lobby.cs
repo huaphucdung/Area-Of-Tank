@@ -33,7 +33,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        roomListChangeAction += OnRoomListUpdate;
+        roomListChangeAction += OnRoomListUpdates;
 
         joinLobbySuccessAction += OnJoinLooby;
         leftLobbySuccessAction += OnLeftLobby;
@@ -46,7 +46,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     }
 
     
-    private void OnRoomListUpdate(List<RoomInfo> roomList)
+    private void OnRoomListUpdates(List<RoomInfo> roomList)
     {
         if (ui == null) return;
         ui.ShowListRoom(roomList);
