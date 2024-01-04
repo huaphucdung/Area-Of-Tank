@@ -75,7 +75,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
             {
                 {"map", map},
-                {"mode", mode },
+                {"mode", mode},
             },
             CustomRoomPropertiesForLobby = new string[] { "map", "mode" }
         };

@@ -9,6 +9,7 @@ using Photon.Pun;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     private int numberTank;
 
     private Map map;
+    private BaseModeSO mode;
+
     public ReusableData reusableData;
     private TankModule mineTank;
     private TakeDamageModule mineTakeDamage;
@@ -42,6 +45,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private const byte EndGameEventCode = 50;
     private const byte SendScoreEventCode = 45;
+    private const byte SendDeadFlagEventCode = 47;
 
     #region Unity
     private void Awake()
@@ -54,8 +58,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         numberTank = numberPlayerLoaded = 0;
         reusableData.Initialize();
-        //Load Map and Mode game play
+        //Load Map
         InstanceMap();
+        //Set Mode
+        mode = ModeReferenceSO.GetModeReference(PhotonManager.GetCurrentRoom().CustomProperties["mode"] as string);
         //Set Score        
         playerScores.Clear();
         foreach (Player player in PhotonNetwork.PlayerList)
@@ -153,7 +159,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             boxItemDictionary[id] = newBox;
             id++;
         }
-      
+        //Set Time
+        float furrentTime = mode.maxTime;
+        DOTween.To(() => furrentTime, x => furrentTime = x, 0f, mode.maxTime).OnComplete(() => {
+            if (!PhotonManager.IsHost()) return;
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+            PhotonNetwork.RaiseEvent(EndGameEventCode, null, raiseEventOptions, SendOptions.SendReliable);
+        });
     }
     #endregion
 
@@ -182,11 +194,34 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
     
+    private void SetPlayerDeadFlag(Player player)
+    {
+        if (playerScores.ContainsKey(player))
+        {
+            playerScores[player].SetGameOver();
+        }
 
+        if (!PhotonManager.IsHost()) return;
+
+        int numberPlayerGameOver = 0;
+        foreach(KeyValuePair<Player, PlayerScore> score in playerScores)
+        {
+            if (score.Value.gameOver) numberPlayerGameOver++;
+        }
+
+        if(numberPlayerGameOver >= (PhotonManager.GetNumberPlayerInRoom() - 1))
+        {
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+            PhotonNetwork.RaiseEvent(EndGameEventCode, null, raiseEventOptions, SendOptions.SendReliable);
+        }
+    }
     #endregion
 
     #region Endgame Methods
-
+    private void EndGame()
+    {
+        Debug.Log("endgame");
+    }
     #endregion
 
     #region Callback Methods
@@ -198,16 +233,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All};
         PhotonNetwork.RaiseEvent(StartGameEventCode, null, raiseEventOptions, SendOptions.SendReliable);
-    }
-
-    private void OnFinishSpawnTank()
-    {
-        if (!PhotonManager.IsHost()) return;
-        numberTank++;
-        if (numberTank != PhotonManager.GetNumberPlayerInRoom()) return;
-        
-        /*RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(StartGameEventCode, null, raiseEventOptions, SendOptions.SendReliable);*/
     }
 
     private void OnTankDefault()
@@ -223,7 +248,18 @@ public class GameManager : MonoBehaviourPunCallbacks
         reusableData.SetDead();
         mineTakeDamage.TakeDameEvent -= OnTankHealthChange;
 
-        //Check codition before respawn
+        //Check can respawn
+        PlayerScore score = playerScores[mineTank.pv.Owner];
+        if (!mode.CanRespawn(score.kill, score.dead))
+        {
+            object[] content = new object[2];
+            content[0] = mineTank.pv.Owner;
+            
+            //Send to all player;
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+            PhotonNetwork.RaiseEvent(SendDeadFlagEventCode, content, raiseEventOptions, SendOptions.SendReliable);
+            return;
+        }
         Timing.RunCoroutine(RespawnTank());
     }
 
@@ -259,10 +295,15 @@ public class GameManager : MonoBehaviourPunCallbacks
                 StartGame();
                 break;
             case EndGameEventCode:
+                EndGame();
                 break;
             case SendScoreEventCode:
                 object[] scoreData = (object[])photonEvent.CustomData;
                 UpdateScore((Player)scoreData[0], (Player)scoreData[1]);
+                break;
+            case SendDeadFlagEventCode:
+                object[] playerDieData = (object[])photonEvent.CustomData;
+                SetPlayerDeadFlag((Player) playerDieData[0]);
                 break;
             case HideBoxItemEventCode:
                 object[] hideBoxData = (object[])photonEvent.CustomData;
@@ -314,11 +355,12 @@ public class PlayerScore
 {
     public int kill;
     public int dead;
-
+    public bool gameOver;
     public PlayerScore()
     {
         kill = 0;
         dead = 0;
+        gameOver = false;
     }
 
     public void Kill()
@@ -329,5 +371,10 @@ public class PlayerScore
     public void Dead()
     {
         dead++;
+    }
+
+    public void SetGameOver()
+    {
+        gameOver = true;    
     }
 }

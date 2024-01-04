@@ -7,12 +7,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ModeReferenceSO", menuName = "Data/ModeReferenceSO")]
 public class ModeReferenceSO : ScriptableObject
 {
-    [SerializeField] private List<ModeReference> modes;
+    [SerializeField] private List<BaseModeSO> modes;
 
-    private static Dictionary<string, ModeReference> _referenceDictionary;
+    private static Dictionary<string, BaseModeSO> _referenceDictionary;
     public void Initialize()
     {
-        _referenceDictionary = new Dictionary<string, ModeReference>();
+        _referenceDictionary = new Dictionary<string, BaseModeSO>();
 
         foreach (var mode in modes)
         {
@@ -25,7 +25,7 @@ public class ModeReferenceSO : ScriptableObject
         return _referenceDictionary.Keys.ToList();
     }
 
-    public static ModeReference GetMoeReference(string key)
+    public static BaseModeSO GetModeReference(string key)
     {
         if (_referenceDictionary != null && _referenceDictionary.ContainsKey(key))
         {
@@ -35,9 +35,5 @@ public class ModeReferenceSO : ScriptableObject
     }
 }
 
-[Serializable]
-public class ModeReference
-{
-    public string key;
-    public int value;
-}
+
+

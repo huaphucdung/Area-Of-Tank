@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19e084ba584b3ea42b623947479b73e5, type: 3}
-  m_Name: ModeReferenceSO
+  m_Script: {fileID: 11500000, guid: cb6a866a99c81a4418381745ac09c5f4, type: 3}
+  m_Name: ScoreModeSO
   m_EditorClassIdentifier: 
-  modes:
-  - {fileID: 11400000, guid: 1f922ee8ae09b1d45b84f4e6ebe6b8d3, type: 2}
-  - {fileID: 11400000, guid: 144af1b5dc4908c49b5565ba3ed823fc, type: 2}
+  key: Score
+  maxTime: 300

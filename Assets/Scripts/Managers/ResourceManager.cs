@@ -20,6 +20,8 @@ public class ResourceManager : MonoBehaviour
     [Header("Rerference Datas:")]
     [SerializeField] private TankReferenceSO tankReferenceSO;
     [SerializeField] private MapReferenceSO mapReferenceSO;
+
+    [Header("Rerference Play Mode:")]
     [SerializeField] private ModeReferenceSO modeReferenceSO;
 
     private void Awake()
