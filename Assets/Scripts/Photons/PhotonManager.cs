@@ -4,13 +4,30 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using MEC;
+using System;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
-{
-    public static string roomNameCreate;
-
+{ 
     private bool inLobby;
+    public static event Action OnJoinLobbyAction;
+    public static event Action OnLeftLobbyAction;
 
+    public static event Action<List<RoomInfo>> OnRoomListUpdateAction;
+
+    public static event Action OnCreateRoomAction;
+    
+    public static event Action<short, string> OnCreateRoomFailseAction;
+
+    public static event Action<ExitGames.Client.Photon.Hashtable> OnRoomPropertiesUpdateAction;
+    public static event Action<Player, ExitGames.Client.Photon.Hashtable> OnPlayerPropertiesInRoomUpdateAction;
+
+    public static event Action OnJoinRoomAction;
+    public static event Action<short, string> OnJoinRoomFailAction;
+
+    public static event Action<Player> OnPlayerJoinRoomAction;
+    public static event Action<Player> OnPlayerLeftRoomAction;
+
+    public static event Action OnLeftRoomAction;
     private void Awake()
     {
         DontDestroyOnLoad(this);
@@ -48,6 +65,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     #region Lobby
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        OnRoomListUpdateAction?.Invoke(roomList);
+
+        //Should remove
         Lobby.roomListChangeAction?.Invoke(roomList);
     }
 
@@ -65,7 +85,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public static void CreateRoom(string roomName, string map, string mode)
     {
-        roomNameCreate = roomName;
         RoomOptions option = new RoomOptions()
         {
             MaxPlayers = 4,
@@ -100,20 +119,30 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom()
     {
+        OnCreateRoomAction?.Invoke();
+
+        //Shoud remove
         Lobby.createRoomSuccessAction?.Invoke();
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
+        OnCreateRoomFailseAction?.Invoke(returnCode, message);
     }
 
     public override void OnJoinedLobby()
     {
+        OnJoinLobbyAction?.Invoke();
+
+        //Shoud remove
         Lobby.joinLobbySuccessAction?.Invoke();
     }
 
     public override void OnLeftLobby()
     {
+        OnLeftLobbyAction?.Invoke();
+
+        //Shoud remove
         Lobby.leftLobbySuccessAction?.Invoke();
     }
 
@@ -165,31 +194,46 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
+        OnRoomPropertiesUpdateAction?.Invoke(propertiesThatChanged);
+
+        //Shoud remove
         Debug.Log("Update Room");
         Room.roomSettingUpdateAction?.Invoke(propertiesThatChanged);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
+        OnPlayerPropertiesInRoomUpdateAction?.Invoke(targetPlayer, changedProps);
+
+        //Shoud remove
         Debug.Log("Update");
         Room.playerSettingInRoomUpdateAction?.Invoke(targetPlayer, changedProps);
     }
 
 
-
     public override void OnJoinedRoom()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+
+        OnJoinRoomAction?.Invoke();
+
+        //Shoud remove
         Lobby.joinRoomSuccessAction?.Invoke();
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
+        OnJoinRoomFailAction?.Invoke(returnCode, message);
+
+        //Shoud remove
         Lobby.joinRoomFailseAction?.Invoke();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
+        OnJoinRoomFailAction?.Invoke(returnCode, message);
+        
+        //Shoud remove
         Lobby.joinRoomFailseAction?.Invoke();
     }
 
@@ -197,16 +241,26 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         inLobby = true;
         PhotonNetwork.AutomaticallySyncScene = false;
+
+        OnLeftRoomAction?.Invoke();
+
+        //Shoud remove
         Lobby.leaveRoomAction?.Invoke();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        OnPlayerJoinRoomAction?.Invoke(newPlayer);
+
+       //Shoud remove
         Room.hasPlayerJoinRoomAction?.Invoke(newPlayer);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+        OnPlayerLeftRoomAction?.Invoke(otherPlayer);
+
+        //Shoud remove
         Room.hasPlayerLeaveRoomAction?.Invoke(otherPlayer);
     }
 

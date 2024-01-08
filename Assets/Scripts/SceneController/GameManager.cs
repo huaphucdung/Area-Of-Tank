@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void UpdateScore(Player whoKill, Player whoDead)
     {
-        if (playerScores.ContainsKey(whoKill))
+        if (whoKill != null && playerScores.ContainsKey(whoKill))
         {
             playerScores[whoKill].Kill();
         }

@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &515170196444033451
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 562260732828428704}
+  m_Layer: 0
+  m_Name: ItemSpawn2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &562260732828428704
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515170196444033451}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9, y: 0.2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6275631390693624740}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1191029317515775688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6125040232972705217}
+  m_Layer: 0
+  m_Name: PlayerSpawn3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6125040232972705217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191029317515775688}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13, y: 1, z: 17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 690581470445721104}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1313162107472768727
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,8 +118,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3979381076533644979}
+  - component: {fileID: 8996657635170494267}
   m_Layer: 0
-  m_Name: Map1
+  m_Name: Map Rocks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +142,64 @@ Transform:
   - {fileID: 774292797691041344}
   - {fileID: 780579962445519378}
   - {fileID: 8717156344438308069}
+  - {fileID: 690581470445721104}
+  - {fileID: 6275631390693624740}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8996657635170494267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407187222382302966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9269948054b45494a9f09100f2c74061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSpawnPosition:
+  - {fileID: 8292731143208558383}
+  - {fileID: 8684868978731538634}
+  - {fileID: 6125040232972705217}
+  - {fileID: 7783847749922864733}
+  itemSpawnPosition:
+  - {fileID: 1274356252604610111}
+  - {fileID: 562260732828428704}
+  layerCheck:
+    serializedVersion: 2
+    m_Bits: 64
+  rangeCheck: 8
+--- !u!1 &1640176759487764232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1274356252604610111}
+  m_Layer: 0
+  m_Name: ItemSpawn1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1274356252604610111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640176759487764232}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9, y: 0.2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6275631390693624740}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4385138501089487381
 GameObject:
@@ -90,7 +210,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 780579962445519378}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,6 +258,72 @@ Transform:
   - {fileID: 7691438960470092462}
   m_Father: {fileID: 3979381076533644979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4800142448056254589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 690581470445721104}
+  m_Layer: 0
+  m_Name: PlayerPositions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &690581470445721104
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4800142448056254589}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8292731143208558383}
+  - {fileID: 8684868978731538634}
+  - {fileID: 6125040232972705217}
+  - {fileID: 7783847749922864733}
+  m_Father: {fileID: 3979381076533644979}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5013638883775354142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8292731143208558383}
+  m_Layer: 0
+  m_Name: PlayerSpawn1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8292731143208558383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5013638883775354142}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -17, y: 1, z: 18}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 690581470445721104}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5600202713790718612
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +336,7 @@ GameObject:
   - component: {fileID: 329889053081643612}
   - component: {fileID: 7801351859178259824}
   - component: {fileID: 1915441807025125224}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,6 +430,101 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &6738064751837161594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8684868978731538634}
+  m_Layer: 0
+  m_Name: PlayerSpawn2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8684868978731538634
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6738064751837161594}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13, y: 1, z: -15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 690581470445721104}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7823301432209145844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6275631390693624740}
+  m_Layer: 0
+  m_Name: BoxItemPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6275631390693624740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7823301432209145844}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1274356252604610111}
+  - {fileID: 562260732828428704}
+  m_Father: {fileID: 3979381076533644979}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8280542481364900312
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7783847749922864733}
+  m_Layer: 0
+  m_Name: PlayerSpawn4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7783847749922864733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8280542481364900312}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11, y: 1, z: -17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 690581470445721104}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &161790715860302260
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -255,6 +536,10 @@ PrefabInstance:
     - target: {fileID: 6674498564110802557, guid: 066814a237d91e44485a4d47b98e169a, type: 3}
       propertyPath: m_Name
       value: P_ENV_rock_snow_waterfall_lowpoly_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6674498564110802557, guid: 066814a237d91e44485a4d47b98e169a, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7708980365066185838, guid: 066814a237d91e44485a4d47b98e169a, type: 3}
       propertyPath: m_LocalScale.x
@@ -326,6 +611,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_04
       objectReference: {fileID: 0}
+    - target: {fileID: 1433657317876091771, guid: 7d1c4a2ba7163314aa2fcdacf56d5e93, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2719618255675341160, guid: 7d1c4a2ba7163314aa2fcdacf56d5e93, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.02
@@ -396,6 +685,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_03 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6754371670675268683, guid: d59d3a06c1fe4b447971afd47beb0a62, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7775184275428169304, guid: d59d3a06c1fe4b447971afd47beb0a62, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.019999998
@@ -465,6 +758,10 @@ PrefabInstance:
     - target: {fileID: 1704379576385256270, guid: b70ca085c96640c42882f7e4289e0620, type: 3}
       propertyPath: m_Name
       value: P_ENV_stone_snow_lowpoly_06
+      objectReference: {fileID: 0}
+    - target: {fileID: 1704379576385256270, guid: b70ca085c96640c42882f7e4289e0620, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2448961941562542429, guid: b70ca085c96640c42882f7e4289e0620, type: 3}
       propertyPath: m_LocalScale.x
@@ -584,6 +881,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_09
       objectReference: {fileID: 0}
+    - target: {fileID: 4023058150955550991, guid: 83e1826040da1ab4fbc0255549561537, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -605,6 +906,10 @@ PrefabInstance:
     - target: {fileID: 5790777798665384255, guid: 4a2a86a4a4f0c3f4aad44a9abf93ad95, type: 3}
       propertyPath: m_Name
       value: P_ENV_stone_snow_lowpoly_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5790777798665384255, guid: 4a2a86a4a4f0c3f4aad44a9abf93ad95, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7352021263520219948, guid: 4a2a86a4a4f0c3f4aad44a9abf93ad95, type: 3}
       propertyPath: m_LocalScale.x
@@ -724,6 +1029,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_07
       objectReference: {fileID: 0}
+    - target: {fileID: 3328278893143877724, guid: 4d9b3567e77eded49a58655e06c71c77, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -794,6 +1103,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_08
       objectReference: {fileID: 0}
+    - target: {fileID: 2437606014345576322, guid: b79b4b088fb90a14db5e5639ab4d0a45, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -815,6 +1128,10 @@ PrefabInstance:
     - target: {fileID: 1109330617325839198, guid: 766a35b47af36d34784a135daa367747, type: 3}
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_05 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1109330617325839198, guid: 766a35b47af36d34784a135daa367747, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4124870138262262093, guid: 766a35b47af36d34784a135daa367747, type: 3}
       propertyPath: m_LocalScale.x
@@ -1058,6 +1375,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_stone_snow_lowpoly_07
       objectReference: {fileID: 0}
+    - target: {fileID: 7159167412709263421, guid: 7c6292eae2f408e46a76a8c670785248, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1079,6 +1400,10 @@ PrefabInstance:
     - target: {fileID: 6754371670675268683, guid: d59d3a06c1fe4b447971afd47beb0a62, type: 3}
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_03 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6754371670675268683, guid: d59d3a06c1fe4b447971afd47beb0a62, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7775184275428169304, guid: d59d3a06c1fe4b447971afd47beb0a62, type: 3}
       propertyPath: m_LocalScale.x
@@ -1274,6 +1599,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_03
       objectReference: {fileID: 0}
+    - target: {fileID: 6754371670675268683, guid: d59d3a06c1fe4b447971afd47beb0a62, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7775184275428169304, guid: d59d3a06c1fe4b447971afd47beb0a62, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.019999998
@@ -1391,6 +1720,10 @@ PrefabInstance:
     - target: {fileID: 4023058150955550991, guid: 83e1826040da1ab4fbc0255549561537, type: 3}
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_09 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023058150955550991, guid: 83e1826040da1ab4fbc0255549561537, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1586,6 +1919,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_09 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4023058150955550991, guid: 83e1826040da1ab4fbc0255549561537, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1655,6 +1992,10 @@ PrefabInstance:
     - target: {fileID: 8193682377964832827, guid: 739392cebbbe8e6458f880cd443bcd89, type: 3}
       propertyPath: m_Name
       value: P_ENV_stone_snow_lowpoly_04
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193682377964832827, guid: 739392cebbbe8e6458f880cd443bcd89, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2036,6 +2377,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_06
       objectReference: {fileID: 0}
+    - target: {fileID: 2601265278032242797, guid: 5fd083b41338dff48b1ab3247913e2b6, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2119,6 +2464,10 @@ PrefabInstance:
     - target: {fileID: 1109330617325839198, guid: 766a35b47af36d34784a135daa367747, type: 3}
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1109330617325839198, guid: 766a35b47af36d34784a135daa367747, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4124870138262262093, guid: 766a35b47af36d34784a135daa367747, type: 3}
       propertyPath: m_LocalScale.x
@@ -2238,6 +2587,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_08 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2437606014345576322, guid: b79b4b088fb90a14db5e5639ab4d0a45, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2259,6 +2612,10 @@ PrefabInstance:
     - target: {fileID: 1704379576385256270, guid: b70ca085c96640c42882f7e4289e0620, type: 3}
       propertyPath: m_Name
       value: P_ENV_stone_snow_lowpoly_06 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1704379576385256270, guid: b70ca085c96640c42882f7e4289e0620, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2448961941562542429, guid: b70ca085c96640c42882f7e4289e0620, type: 3}
       propertyPath: m_LocalScale.x
@@ -2378,6 +2735,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_07 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3328278893143877724, guid: 4d9b3567e77eded49a58655e06c71c77, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2399,6 +2760,10 @@ PrefabInstance:
     - target: {fileID: 6674498564110802557, guid: 066814a237d91e44485a4d47b98e169a, type: 3}
       propertyPath: m_Name
       value: P_ENV_rock_snow_waterfall_lowpoly_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6674498564110802557, guid: 066814a237d91e44485a4d47b98e169a, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7708980365066185838, guid: 066814a237d91e44485a4d47b98e169a, type: 3}
       propertyPath: m_LocalScale.x
@@ -2580,6 +2945,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_02
       objectReference: {fileID: 0}
+    - target: {fileID: 3376671614097543286, guid: 954eb69d917bc394892166236e17358a, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2649,6 +3018,10 @@ PrefabInstance:
     - target: {fileID: 2437606014345576322, guid: b79b4b088fb90a14db5e5639ab4d0a45, type: 3}
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_08 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2437606014345576322, guid: b79b4b088fb90a14db5e5639ab4d0a45, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2734,6 +3107,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_stone_snow_lowpoly_03
       objectReference: {fileID: 0}
+    - target: {fileID: 4751564921827444335, guid: 89af1122a4c387242b9d437521ed1dbe, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8623173687286019196, guid: 89af1122a4c387242b9d437521ed1dbe, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.02
@@ -2804,6 +3181,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_01
       objectReference: {fileID: 0}
+    - target: {fileID: 5238409570763330936, guid: 804850f0644e17f40992ccd3453f9104, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 9145060527964956523, guid: 804850f0644e17f40992ccd3453f9104, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.019999998
@@ -2873,6 +3254,10 @@ PrefabInstance:
     - target: {fileID: 1109330617325839198, guid: 766a35b47af36d34784a135daa367747, type: 3}
       propertyPath: m_Name
       value: P_ENV_rock_snow_lowpoly_05 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1109330617325839198, guid: 766a35b47af36d34784a135daa367747, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4124870138262262093, guid: 766a35b47af36d34784a135daa367747, type: 3}
       propertyPath: m_LocalScale.x

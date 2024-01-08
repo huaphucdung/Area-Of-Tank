@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,10 +31,27 @@ public class Map : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        /*ITakeDamage takeDame = other.GetComponent<ITakeDamage>();
-        if (takeDame != null)
+        Debug.Log(other.name);
+        if (!PhotonManager.IsHost()) return;
+        TakeDamageModule takeDamage = other.gameObject.GetComponent<TakeDamageModule>();
+        if (takeDamage == null) return;
+        takeDamage.view.RPC("Attack", RpcTarget.All, null, 9999);
+    }
+
+    private void OnDrawGizmos()
+    {
+        foreach (Transform playerTrans in playerSpawnPosition)
         {
-            takeDame.Attack(0, true);
-        }*/
+            Gizmos.color = Color.blue;
+            Gizmos.DrawSphere(playerTrans.position, 1f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(playerTrans.position, rangeCheck);
+        }
+
+        foreach (Transform boxItemTrans in itemSpawnPosition)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(boxItemTrans.position, 1f);
+        }
     }
 }

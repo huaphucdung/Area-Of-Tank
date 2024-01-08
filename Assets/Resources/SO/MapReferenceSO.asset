@@ -13,21 +13,15 @@ MonoBehaviour:
   m_Name: MapReferenceSO
   m_EditorClassIdentifier: 
   maps:
-  - key: Desert
+  - key: The Mountains
     mapAsset:
-      m_AssetGUID: 3eb2381e14b48e142b89bc3c9e112e56
+      m_AssetGUID: 1f9a330a56652624d98d6499e070a9a2
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  - key: Forest
+  - key: The Rocks
     mapAsset:
-      m_AssetGUID: 5dc1a834be8577947bd747eabbf8de84
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
-  - key: Island
-    mapAsset:
-      m_AssetGUID: 40d7658b3c459f3489fc42f743354098
+      m_AssetGUID: 67b6b84ddd333664592e46708747f68b
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0

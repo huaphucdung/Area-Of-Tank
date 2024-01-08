@@ -38,7 +38,6 @@ public class Shell : MonoBehaviourPunCallbacks
         Invoke("ReturnToPool", 0.5f);
 
         if (!PhotonManager.IsHost()) return;
-
         TakeDamageModule takeDamage = collision.gameObject.GetComponent<TakeDamageModule>();
         if (takeDamage == null) return;
         takeDamage.view.RPC("Attack", RpcTarget.All, player, damage);

@@ -17,8 +17,8 @@ TagManager:
   - Shell
   - Ground
   - Obstacle
-  - Box
-  - 
+  - BoxItem
+  - DeadZone
   - 
   - Post Processing
   - 
